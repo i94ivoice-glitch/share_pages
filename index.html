@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🐝 蜜蜂射擊大戰</title>
+    <title>Jovie 的線上資源庫 | GitHub Pages</title>
     <style>
         * {
             margin: 0;
@@ -12,573 +12,487 @@
         }
         
         body {
-            background: linear-gradient(135deg, #87CEEB 0%, #98FB98 100%);
-            font-family: 'Arial', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
+            padding: 20px;
         }
         
-        .game-title {
-            color: #2E8B57;
-            font-size: 2.5em;
-            font-weight: bold;
-            margin: 20px 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .game-container {
-            position: relative;
-            border: 4px solid #228B22;
-            border-radius: 15px;
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
             overflow: hidden;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-            background: #87CEEB;
         }
         
-        #gameCanvas {
-            display: block;
-            background: linear-gradient(180deg, #87CEEB 0%, #98FB98 100%);
+        .header {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
         }
         
-        .score-panel {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            right: 10px;
-            display: flex;
-            justify-content: space-between;
-            z-index: 100;
-            font-weight: bold;
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
             font-size: 1.2em;
-            color: #2E8B57;
-            text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+            opacity: 0.9;
+            margin-bottom: 10px;
         }
         
-        .game-over {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255,255,255,0.95);
-            padding: 30px;
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
             border-radius: 15px;
             text-align: center;
-            z-index: 200;
-            display: none;
-            border: 3px solid #228B22;
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
         }
         
-        .game-over h2 {
-            color: #DC143C;
-            margin-bottom: 15px;
-            font-size: 2em;
+        .stat-number {
+            font-size: 1.8em;
+            font-weight: bold;
+            display: block;
         }
         
-        .game-over p {
-            color: #2E8B57;
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            color: #2c3e50;
+            font-size: 1.8em;
             margin-bottom: 20px;
+            border-left: 5px solid #3498db;
+            padding-left: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .file-card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .file-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border-color: #3498db;
+        }
+        
+        .file-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #3498db, #2980b9);
+        }
+        
+        .file-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .file-title {
             font-size: 1.3em;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+        
+        .file-type {
+            background: #3498db;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .file-description {
+            color: #6c757d;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+        }
+        
+        .file-features {
+            margin-bottom: 20px;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 4px 0;
+            font-size: 0.9em;
+            color: #495057;
+        }
+        
+        .feature-list li::before {
+            content: '✅ ';
+            margin-right: 5px;
+        }
+        
+        .file-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 0.85em;
+            color: #6c757d;
+        }
+        
+        .file-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
         }
         
         .btn {
-            background: linear-gradient(145deg, #32CD32, #228B22);
+            background: linear-gradient(145deg, #3498db, #2980b9);
             color: white;
             border: none;
-            padding: 12px 25px;
+            padding: 12px 20px;
             border-radius: 8px;
-            cursor: pointer;
-            font-size: 1.1em;
-            font-weight: bold;
-            margin: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9em;
             transition: all 0.3s;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            text-align: center;
+            display: inline-block;
         }
         
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
-            background: linear-gradient(145deg, #228B22, #32CD32);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
         }
         
-        .controls {
-            margin-top: 15px;
-            color: #2E8B57;
+        .btn-primary {
+            background: linear-gradient(145deg, #3498db, #2980b9);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(145deg, #95a5a6, #7f8c8d);
+        }
+        
+        .game-card {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            border-color: #ff9a9e;
+        }
+        
+        .education-card {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-color: #a8edea;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            border-top: 2px solid #ecf0f1;
+            padding: 30px 40px;
             text-align: center;
-            font-size: 1.1em;
+            color: #6c757d;
         }
         
-        @media (max-width: 600px) {
-            .game-title {
-                font-size: 2em;
-                margin: 10px 0;
+        .tech-badge {
+            display: inline-block;
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 600;
+            margin: 2px;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
             }
             
-            .controls {
-                font-size: 1em;
+            .container {
+                border-radius: 15px;
+            }
+            
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 30px 20px;
+            }
+            
+            .file-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats {
+                gap: 15px;
+            }
+            
+            .file-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <h1 class="game-title">🐝 蜜蜂射擊大戰 🎯</h1>
-    
-    <div class="game-container">
-        <canvas id="gameCanvas" width="400" height="600"></canvas>
-        
-        <div class="score-panel">
-            <div>💯 分數: <span id="score">0</span></div>
-            <div>❤️ 生命: <span id="lives">3</span></div>
-            <div>🎯 擊殺: <span id="kills">0</span></div>
+    <div class="container">
+        <div class="header">
+            <h1>🌐 Jovie 的線上資源庫</h1>
+            <p>GitHub Pages 託管 | 專業內容發布平台</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number">4</span>
+                    <span class="stat-label">發布項目</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">教育資源</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">1</span>
+                    <span class="stat-label">互動遊戲</span>
+                </div>
+            </div>
         </div>
         
-        <div class="game-over" id="gameOver">
-            <h2>🎮 遊戲結束！</h2>
-            <p>最終分數: <span id="finalScore">0</span></p>
-            <p>擊殺數: <span id="finalKills">0</span></p>
-            <button class="btn" onclick="startGame()">🚀 重新開始</button>
+        <div class="content">
+            <!-- 最新發布 -->
+            <div class="section">
+                <h2>🔥 最新發布</h2>
+                
+                <div class="file-grid">
+                    <!-- Mermaid 互動版 - 最新 -->
+                    <div class="file-card education-card">
+                        <div class="file-header">
+                            <div>
+                                <div class="file-title">📊 12年國教升學指南 - Mermaid互動版</div>
+                                <div class="tech-badge">Mermaid.js</div>
+                                <div class="tech-badge">互動圖表</div>
+                                <div class="tech-badge">專業版</div>
+                            </div>
+                            <div class="file-type">教育資源</div>
+                        </div>
+                        
+                        <div class="file-description">
+                            使用專業 Mermaid.js 圖表庫的互動版升學指南，支援縮放、拖拽等操作，提供最佳的視覺化升學決策體驗。
+                        </div>
+                        
+                        <div class="file-features">
+                            <ul class="feature-list">
+                                <li>Mermaid.js v10.7.0 專業流程圖</li>
+                                <li>支援縮放、拖拽、點擊互動</li>
+                                <li>向量圖形，無限縮放不失真</li>
+                                <li>動態渲染，即時載入</li>
+                                <li>響應式設計，跨設備兼容</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="file-meta">
+                            <span>📅 2026-03-07 20:00</span>
+                            <span>🎯 推薦版本</span>
+                        </div>
+                        
+                        <div class="file-actions">
+                            <a href="12年國教升學指南_Mermaid互動版2026.html" class="btn btn-primary">📊 開啟互動版</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 教育資源 -->
+            <div class="section">
+                <h2>📚 教育資源</h2>
+                
+                <div class="file-grid">
+                    <!-- 完整版 -->
+                    <div class="file-card education-card">
+                        <div class="file-header">
+                            <div>
+                                <div class="file-title">📋 12年國教升學完整說明指南</div>
+                                <div class="tech-badge">完整版</div>
+                                <div class="tech-badge">CSS圖表</div>
+                            </div>
+                            <div class="file-type">教育資源</div>
+                        </div>
+                        
+                        <div class="file-description">
+                            最詳細的12年國教升學指南，包含完整時程表、招生管道對比、成績落點分析等，適合家長深度研讀。
+                        </div>
+                        
+                        <div class="file-features">
+                            <ul class="feature-list">
+                                <li>3月-7月完整時程表</li>
+                                <li>各招生管道詳細對比</li>
+                                <li>成績落點分析建議</li>
+                                <li>純CSS流程圖，無外部依賴</li>
+                                <li>重要注意事項完整版</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="file-meta">
+                            <span>📅 2026-03-07 19:45</span>
+                            <span>👨‍👩‍👧‍👦 家長推薦</span>
+                        </div>
+                        
+                        <div class="file-actions">
+                            <a href="12年國教升學完整說明指南_完整版2026.html" class="btn btn-primary">📖 閱讀完整版</a>
+                        </div>
+                    </div>
+                    
+                    <!-- 精簡版 -->
+                    <div class="file-card education-card">
+                        <div class="file-header">
+                            <div>
+                                <div class="file-title">📝 12年國教升學指南2026年版</div>
+                                <div class="tech-badge">精簡版</div>
+                                <div class="tech-badge">快速查閱</div>
+                            </div>
+                            <div class="file-type">教育資源</div>
+                        </div>
+                        
+                        <div class="file-description">
+                            核心資訊摘要版本，適合學生和家長快速查閱升學相關資訊，包含基本流程圖和重點說明。
+                        </div>
+                        
+                        <div class="file-features">
+                            <ul class="feature-list">
+                                <li>核心升學資訊摘要</li>
+                                <li>基本決策流程圖</li>
+                                <li>重點時程提醒</li>
+                                <li>快速查閱設計</li>
+                                <li>手機友善介面</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="file-meta">
+                            <span>📅 2026-03-07 19:30</span>
+                            <span>🎯 學生推薦</span>
+                        </div>
+                        
+                        <div class="file-actions">
+                            <a href="12年國教升學指南2026年版.html" class="btn btn-primary">📱 快速查閱</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 遊戲娛樂 -->
+            <div class="section">
+                <h2>🎮 遊戲娛樂</h2>
+                
+                <div class="file-grid">
+                    <div class="file-card game-card">
+                        <div class="file-header">
+                            <div>
+                                <div class="file-title">🐝 蜜蜂射擊大戰</div>
+                                <div class="tech-badge">HTML5</div>
+                                <div class="tech-badge">觸控遊戲</div>
+                                <div class="tech-badge">震動回饋</div>
+                            </div>
+                            <div class="file-type">互動遊戲</div>
+                        </div>
+                        
+                        <div class="file-description">
+                            完整的觸控射擊遊戲，支援手指滑動控制，包含蜜蜂敵人、爆炸效果、計分系統和震動回饋。
+                        </div>
+                        
+                        <div class="file-features">
+                            <ul class="feature-list">
+                                <li>觸控滑動操作，手機完美支援</li>
+                                <li>蜜蜂敵人AI，會主動攻擊</li>
+                                <li>粒子爆炸效果，專業視覺</li>
+                                <li>即時計分與生命值系統</li>
+                                <li>震動回饋，沉浸式體驗</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="file-meta">
+                            <span>📅 2026-03-07 19:00</span>
+                            <span>🏆 原創遊戲</span>
+                        </div>
+                        
+                        <div class="file-actions">
+                            <a href="bee_shooter_game.html" class="btn btn-primary">🎮 開始遊戲</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 技術說明 -->
+            <div class="section">
+                <h2>🛠️ 技術資訊</h2>
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 12px; border: 2px solid #e9ecef;">
+                    <h3 style="color: #495057; margin-bottom: 15px;">部署資訊</h3>
+                    <ul style="color: #6c757d; list-style-type: none; padding: 0;">
+                        <li style="padding: 5px 0;"><strong>🌐 平台：</strong> GitHub Pages</li>
+                        <li style="padding: 5px 0;"><strong>🏗️ 技術：</strong> HTML5, CSS3, JavaScript, Mermaid.js</li>
+                        <li style="padding: 5px 0;"><strong>📱 設計：</strong> 響應式設計，跨設備兼容</li>
+                        <li style="padding: 5px 0;"><strong>🔄 更新：</strong> 自動化發布工具 (OpenClaw + Javis)</li>
+                        <li style="padding: 5px 0;"><strong>📊 流程圖：</strong> Mermaid.js v10.7.0 + CSS 實現</li>
+                        <li style="padding: 5px 0;"><strong>🎮 遊戲：</strong> HTML5 Canvas + 觸控API</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>📅 網站更新：2026年3月7日 20:00 (台灣時間)</strong></p>
+            <p>🤖 由 Javis (OpenClaw) 自動維護 | 🚀 GitHub Pages 託管</p>
+            <p>⚡ 自動化發布工具 | 🎨 專業設計 | 📱 響應式布局</p>
+            <p>📧 聯絡：i94ivoice@gmail.com | 🌐 原始碼：GitHub</p>
         </div>
     </div>
-    
-    <div class="controls">
-        📱 用手指滑動控制發射器 • 🎯 躲避蜜蜂炸彈 • 💥 反擊得分
-    </div>
-    
-    <script>
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        
-        // 遊戲狀態
-        let gameRunning = false;
-        let score = 0;
-        let lives = 3;
-        let kills = 0;
-        let animationId;
-        
-        // 遊戲物件
-        let player = {
-            x: canvas.width / 2,
-            y: canvas.height - 50,
-            width: 40,
-            height: 30,
-            speed: 5
-        };
-        
-        let bullets = [];
-        let bees = [];
-        let enemyBullets = [];
-        let particles = [];
-        
-        // 觸控控制
-        let touchX = null;
-        let lastTouchX = null;
-        
-        // 遊戲計時
-        let lastBeeSpawn = 0;
-        let lastShot = 0;
-        let gameTime = 0;
-        
-        // 初始化遊戲
-        function initGame() {
-            score = 0;
-            lives = 3;
-            kills = 0;
-            bullets = [];
-            bees = [];
-            enemyBullets = [];
-            particles = [];
-            player.x = canvas.width / 2;
-            gameTime = 0;
-            lastBeeSpawn = 0;
-            lastShot = 0;
-            updateUI();
-        }
-        
-        function updateUI() {
-            document.getElementById('score').textContent = score;
-            document.getElementById('lives').textContent = lives;
-            document.getElementById('kills').textContent = kills;
-        }
-        
-        function startGame() {
-            initGame();
-            gameRunning = true;
-            document.getElementById('gameOver').style.display = 'none';
-            gameLoop();
-        }
-        
-        // 添加觸控事件
-        canvas.addEventListener('touchstart', handleTouch);
-        canvas.addEventListener('touchmove', handleTouch);
-        canvas.addEventListener('touchend', () => {
-            touchX = null;
-            lastTouchX = null;
-        });
-        
-        // 滑鼠事件（桌面測試）
-        canvas.addEventListener('mousedown', (e) => {
-            const rect = canvas.getBoundingClientRect();
-            touchX = e.clientX - rect.left;
-            lastTouchX = touchX;
-        });
-        
-        canvas.addEventListener('mousemove', (e) => {
-            if (touchX !== null) {
-                const rect = canvas.getBoundingClientRect();
-                touchX = e.clientX - rect.left;
-            }
-        });
-        
-        canvas.addEventListener('mouseup', () => {
-            touchX = null;
-            lastTouchX = null;
-        });
-        
-        function handleTouch(e) {
-            e.preventDefault();
-            const rect = canvas.getBoundingClientRect();
-            if (e.touches.length > 0) {
-                touchX = e.touches[0].clientX - rect.left;
-                if (lastTouchX === null) lastTouchX = touchX;
-            }
-        }
-        
-        function updatePlayer() {
-            if (touchX !== null && lastTouchX !== null) {
-                const moveDistance = touchX - lastTouchX;
-                player.x += moveDistance;
-                lastTouchX = touchX;
-            }
-            
-            // 限制玩家在畫布範圍內
-            player.x = Math.max(player.width / 2, Math.min(canvas.width - player.width / 2, player.x));
-        }
-        
-        function shootBullet() {
-            if (Date.now() - lastShot > 200) { // 限制射擊頻率
-                bullets.push({
-                    x: player.x,
-                    y: player.y - 10,
-                    width: 4,
-                    height: 10,
-                    speed: 8
-                });
-                lastShot = Date.now();
-            }
-        }
-        
-        function spawnBee() {
-            if (Date.now() - lastBeeSpawn > 1500 - Math.min(gameTime * 10, 1000)) {
-                bees.push({
-                    x: Math.random() * (canvas.width - 40) + 20,
-                    y: -30,
-                    width: 30,
-                    height: 25,
-                    speed: 1 + Math.random() * 2,
-                    lastShot: 0,
-                    health: 1
-                });
-                lastBeeSpawn = Date.now();
-            }
-        }
-        
-        function updateBees() {
-            for (let i = bees.length - 1; i >= 0; i--) {
-                bees[i].y += bees[i].speed;
-                
-                // 蜜蜂射擊
-                if (Date.now() - bees[i].lastShot > 1000 + Math.random() * 2000) {
-                    enemyBullets.push({
-                        x: bees[i].x,
-                        y: bees[i].y + 20,
-                        width: 6,
-                        height: 8,
-                        speed: 3 + Math.random() * 2
-                    });
-                    bees[i].lastShot = Date.now();
-                }
-                
-                // 移除超出邊界的蜜蜂
-                if (bees[i].y > canvas.height) {
-                    bees.splice(i, 1);
-                }
-            }
-        }
-        
-        function updateBullets() {
-            // 玩家子彈
-            for (let i = bullets.length - 1; i >= 0; i--) {
-                bullets[i].y -= bullets[i].speed;
-                if (bullets[i].y < 0) {
-                    bullets.splice(i, 1);
-                }
-            }
-            
-            // 敵人子彈
-            for (let i = enemyBullets.length - 1; i >= 0; i--) {
-                enemyBullets[i].y += enemyBullets[i].speed;
-                if (enemyBullets[i].y > canvas.height) {
-                    enemyBullets.splice(i, 1);
-                }
-            }
-        }
-        
-        function checkCollisions() {
-            // 玩家子彈擊中蜜蜂
-            for (let i = bullets.length - 1; i >= 0; i--) {
-                for (let j = bees.length - 1; j >= 0; j--) {
-                    if (isColliding(bullets[i], bees[j])) {
-                        // 創建爆炸效果
-                        createExplosion(bees[j].x, bees[j].y);
-                        
-                        bullets.splice(i, 1);
-                        bees.splice(j, 1);
-                        score += 10;
-                        kills++;
-                        
-                        // 震動回饋
-                        if (navigator.vibrate) {
-                            navigator.vibrate(100);
-                        }
-                        
-                        updateUI();
-                        break;
-                    }
-                }
-            }
-            
-            // 敵人子彈擊中玩家
-            for (let i = enemyBullets.length - 1; i >= 0; i--) {
-                if (isColliding(enemyBullets[i], player)) {
-                    enemyBullets.splice(i, 1);
-                    lives--;
-                    
-                    // 強震動回饋
-                    if (navigator.vibrate) {
-                        navigator.vibrate([200, 100, 200]);
-                    }
-                    
-                    updateUI();
-                    
-                    if (lives <= 0) {
-                        endGame();
-                        return;
-                    }
-                }
-            }
-            
-            // 蜜蜂撞到玩家
-            for (let i = bees.length - 1; i >= 0; i--) {
-                if (isColliding(bees[i], player)) {
-                    bees.splice(i, 1);
-                    lives--;
-                    
-                    // 超強震動
-                    if (navigator.vibrate) {
-                        navigator.vibrate([300, 100, 300, 100, 300]);
-                    }
-                    
-                    updateUI();
-                    
-                    if (lives <= 0) {
-                        endGame();
-                        return;
-                    }
-                }
-            }
-        }
-        
-        function isColliding(obj1, obj2) {
-            return obj1.x < obj2.x + obj2.width &&
-                   obj1.x + obj1.width > obj2.x &&
-                   obj1.y < obj2.y + obj2.height &&
-                   obj1.y + obj1.height > obj2.y;
-        }
-        
-        function createExplosion(x, y) {
-            for (let i = 0; i < 8; i++) {
-                particles.push({
-                    x: x,
-                    y: y,
-                    vx: (Math.random() - 0.5) * 10,
-                    vy: (Math.random() - 0.5) * 10,
-                    life: 30,
-                    color: `hsl(${Math.random() * 60 + 10}, 100%, 50%)`
-                });
-            }
-        }
-        
-        function updateParticles() {
-            for (let i = particles.length - 1; i >= 0; i--) {
-                particles[i].x += particles[i].vx;
-                particles[i].y += particles[i].vy;
-                particles[i].life--;
-                
-                if (particles[i].life <= 0) {
-                    particles.splice(i, 1);
-                }
-            }
-        }
-        
-        function draw() {
-            // 清除畫布
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // 繪製背景雲朵
-            drawClouds();
-            
-            // 繪製玩家
-            drawPlayer();
-            
-            // 繪製子彈
-            drawBullets();
-            
-            // 繪製蜜蜂
-            drawBees();
-            
-            // 繪製敵人子彈
-            drawEnemyBullets();
-            
-            // 繪製粒子效果
-            drawParticles();
-        }
-        
-        function drawClouds() {
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
-            for (let i = 0; i < 3; i++) {
-                const x = (gameTime * 0.2 + i * 150) % (canvas.width + 50) - 25;
-                const y = 50 + i * 30;
-                
-                ctx.beginPath();
-                ctx.arc(x, y, 15, 0, Math.PI * 2);
-                ctx.arc(x + 20, y, 20, 0, Math.PI * 2);
-                ctx.arc(x + 40, y, 15, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-        
-        function drawPlayer() {
-            // 繪製發射器主體
-            ctx.fillStyle = '#4169E1';
-            ctx.fillRect(player.x - player.width/2, player.y - player.height/2, player.width, player.height);
-            
-            // 繪製發射器砲管
-            ctx.fillStyle = '#191970';
-            ctx.fillRect(player.x - 3, player.y - player.height/2 - 10, 6, 15);
-            
-            // 繪製發射器裝飾
-            ctx.fillStyle = '#FFD700';
-            ctx.fillRect(player.x - player.width/2 + 5, player.y - 5, player.width - 10, 5);
-            
-            // 自動射擊
-            if (gameRunning) {
-                shootBullet();
-            }
-        }
-        
-        function drawBullets() {
-            ctx.fillStyle = '#FFD700';
-            bullets.forEach(bullet => {
-                ctx.fillRect(bullet.x - bullet.width/2, bullet.y, bullet.width, bullet.height);
-                
-                // 子彈光效
-                ctx.shadowColor = '#FFD700';
-                ctx.shadowBlur = 5;
-                ctx.fillRect(bullet.x - bullet.width/2, bullet.y, bullet.width, bullet.height);
-                ctx.shadowBlur = 0;
-            });
-        }
-        
-        function drawBees() {
-            bees.forEach(bee => {
-                // 蜜蜂身體
-                ctx.fillStyle = '#FFD700';
-                ctx.beginPath();
-                ctx.ellipse(bee.x, bee.y, bee.width/2, bee.height/2, 0, 0, Math.PI * 2);
-                ctx.fill();
-                
-                // 蜜蜂條紋
-                ctx.fillStyle = '#000000';
-                for (let i = 0; i < 3; i++) {
-                    ctx.fillRect(bee.x - bee.width/2 + i * 8, bee.y - 3, 3, 6);
-                }
-                
-                // 蜜蜂翅膀（動畫）
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-                const wingOffset = Math.sin(gameTime * 0.5) * 3;
-                ctx.beginPath();
-                ctx.ellipse(bee.x - 8, bee.y - 8 + wingOffset, 6, 10, -0.3, 0, Math.PI * 2);
-                ctx.ellipse(bee.x + 8, bee.y - 8 - wingOffset, 6, 10, 0.3, 0, Math.PI * 2);
-                ctx.fill();
-            });
-        }
-        
-        function drawEnemyBullets() {
-            ctx.fillStyle = '#DC143C';
-            enemyBullets.forEach(bullet => {
-                ctx.beginPath();
-                ctx.arc(bullet.x, bullet.y, bullet.width/2, 0, Math.PI * 2);
-                ctx.fill();
-                
-                // 敵人子彈光效
-                ctx.shadowColor = '#DC143C';
-                ctx.shadowBlur = 3;
-                ctx.fill();
-                ctx.shadowBlur = 0;
-            });
-        }
-        
-        function drawParticles() {
-            particles.forEach(particle => {
-                ctx.fillStyle = particle.color;
-                ctx.globalAlpha = particle.life / 30;
-                ctx.beginPath();
-                ctx.arc(particle.x, particle.y, 3, 0, Math.PI * 2);
-                ctx.fill();
-            });
-            ctx.globalAlpha = 1;
-        }
-        
-        function endGame() {
-            gameRunning = false;
-            document.getElementById('finalScore').textContent = score;
-            document.getElementById('finalKills').textContent = kills;
-            document.getElementById('gameOver').style.display = 'block';
-            
-            if (animationId) {
-                cancelAnimationFrame(animationId);
-            }
-        }
-        
-        function gameLoop() {
-            if (!gameRunning) return;
-            
-            gameTime++;
-            
-            updatePlayer();
-            updateBees();
-            updateBullets();
-            updateParticles();
-            spawnBee();
-            checkCollisions();
-            draw();
-            
-            animationId = requestAnimationFrame(gameLoop);
-        }
-        
-        // 防止頁面滾動
-        document.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-        }, { passive: false });
-        
-        // 啟動遊戲
-        initGame();
-    </script>
 </body>
 </html>

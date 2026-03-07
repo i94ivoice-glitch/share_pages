@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>12年國教升學完整說明指南</title>
+    
+    
+    <!-- Mermaid.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+        
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        h2 {
+            color: #2c3e50;
+            font-size: 1.8em;
+            margin: 30px 0 15px 0;
+            border-left: 5px solid #667eea;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        h3 {
+            color: #34495e;
+            font-size: 1.4em;
+            margin: 25px 0 10px 0;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 5px;
+        }
+        
+        /* Mermaid 圖表樣式 */
+        .mermaid-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            border: 2px solid #e9ecef;
+        }
+        
+        .mermaid {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            display: inline-block;
+            min-width: 300px;
+        }
+        
+        .mermaid-title {
+            color: #495057;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        /* 表格樣式 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        tr:hover {
+            background: #f8f9fa;
+            transform: translateX(2px);
+            transition: all 0.2s ease;
+        }
+        
+        /* 特殊區塊樣式 */
+        .highlight {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #e17055;
+        }
+        
+        .warning {
+            background: linear-gradient(135deg, #fab1a0 0%, #e84393 100%);
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #d63031;
+        }
+        
+        .success {
+            background: linear-gradient(135deg, #55efc4 0%, #81ecec 100%);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #00b894;
+        }
+        
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+        
+        li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+        
+        .footer {
+            background: #2d3436;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+        }
+        
+        .mermaid-info {
+            background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .header { padding: 30px 20px; }
+            .header h1 { font-size: 2em; }
+            .content { padding: 30px 20px; }
+            .container { max-width: 100%; }
+            
+            .mermaid-container {
+                padding: 20px;
+                margin: 20px 0;
+            }
+            
+            .mermaid {
+                min-width: unset;
+                width: 100%;
+                overflow-x: auto;
+            }
+            
+            table { font-size: 0.9em; }
+            th, td { padding: 10px; }
+        }
+        
+        /* Mermaid 圖表美化 */
+        .mermaid svg {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 12年國教升學完整說明指南</h1>
+            <p>🤖 由 Javis AI 助理自動生成 | 支援互動式流程圖</p>
+        </div>
+        
+        <div class="content">
+            <div class="mermaid-info">
+                🎯 <strong>互動式流程圖</strong> - 此文件包含 1 個可互動的流程圖
+                <br>📱 支援縮放、點擊、觸控操作
+            </div>
+            <h2>📋 目錄</h2>
+<ul><li>[重要時程表](#重要時程表)</li>
+<li>[升學決策流程圖](#升學決策流程圖)</li>
+<li>[各招生管道摘要表格](#各招生管道摘要表格)</li>
+<li>[會考基本概念](#會考基本概念)</li>
+<li>[主要升學管道詳解](#主要升學管道詳解)</li>
+<li>[重要注意事項](#重要注意事項)</li>
+</ul>
+---</p><h2>⏰ 重要時程表</h2><table>
+<thead><tr>
+<th>時間</th>
+<th>重要事項</th>
+<th>說明</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><strong>3月底/4月初</strong></td>
+<td>便當預訂</td>
+<td>會考期間統一訂便當</td>
+</tr>
+<tr>
+<td><strong>4月11日</strong></td>
+<td>專業群科術科考試</td>
+<td>新北區統一考試日</td>
+</tr>
+<tr>
+<td><strong>4月12日</strong></td>
+<td>臺北市專業群科考試</td>
+<td>與新北區錯開</td>
+</tr>
+<tr>
+<td><strong>4月17日</strong></td>
+<td>五專服務學習截止</td>
+<td>從七年級累計至此日</td>
+</tr>
+<tr>
+<td><strong>4月23-32日</strong></td>
+<td>跨區申請</td>
+<td>想回南部等其他區域就讀</td>
+</tr>
+<tr>
+<td><strong>5月16-17日</strong></td>
+<td><strong>會考日期</strong></td>
+<td>所有學生必考</td>
+</tr>
+<tr>
+<td><strong>6月4日</strong></td>
+<td>家長簽名繳費</td>
+<td>免試入學相關文件</td>
+</tr>
+<tr>
+<td><strong>6月5日</strong></td>
+<td>畢業證書發放</td>
+<td>確定就讀學校才交付</td>
+</tr>
+<tr>
+<td><strong>6月第一週後</strong></td>
+<td>畢業典禮</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>6月18日中午12點</strong></td>
+<td>確定招生名額</td>
+<td>各管道剩餘名額回流</td>
+</tr>
+<tr>
+<td><strong>6月18-23日</strong></td>
+<td><strong>志願選填期間</strong></td>
+<td>基本區免試入學正式選填</td>
+</tr>
+<tr>
+<td><strong>7月7日</strong></td>
+<td><strong>基本區免試放榜</strong></td>
+<td>大部分學生的主要管道</td>
+</tr>
+</tbody></table><p>---</p><h2>🔄 升學決策流程圖</h2><div class="mermaid-container">
+                <div class="mermaid-title">
+                    📊 <strong>決策流程圖 #1</strong>
+                </div>
+                <div class="mermaid" id="mermaid-0">
+graph TD
+    A[九年級學生] --> B{確定升學方向}
+    
+    B --> C[普通高中<br/>學術導向]
+    B --> D[技術高中/高職<br/>技術導向]
+    B --> E[五專<br/>專業導向]
+    B --> F[綜合高中<br/>多元試探]
+    
+    C --> G{會考成績預估}
+    D --> G
+    F --> G
+    
+    G --> H[30分以上<br/>建議聯合免試]
+    G --> I[25-30分<br/>可考慮優先免試]
+    G --> J[25分以下<br/>建議完全免試或專業群科]
+    
+    H --> K[基本區免試入學<br/>最多34個志願]
+    I --> L[優先免試<br/>一校一科]
+    I --> K
+    J --> M[完全免試<br/>一校一科]
+    J --> N[專業群科<br/>術科考試]
+    
+    E --> O[五專三管道]
+    O --> P[完全免試<br/>全國一區一校一科]
+    O --> Q[優先免試<br/>全國一區多志願]
+    O --> R[聯合免試<br/>北中南同報選一區]
+    
+    K --> S[6月18-23日志願選填]
+    L --> T[電腦分發]
+    M --> U[現場登記分發]
+    N --> V[4月11日術科考試]
+    P --> U
+    Q --> T
+    R --> U
+    
+    S --> W[7月7日放榜]
+    T --> X[較早放榜]
+    U --> Y[較早放榜]
+    V --> Z[專業群科放榜]
+                </div>
+            </div><p>---</p><h2>📊 各招生管道摘要表格</h2><h3>🎯 高中職主要管道</h3><table>
+<thead><tr>
+<th>管道名稱</th>
+<th>適用範圍</th>
+<th>志願數</th>
+<th>採計會考</th>
+<th>總分</th>
+<th>報名時間</th>
+<th>特色</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><strong>基本區免試入學</strong></td>
+<td>新北區為主</td>
+<td>最多34個</td>
+<td>是</td>
+<td>108分</td>
+<td>6/18-23</td>
+<td>大部分學生首選</td>
+</tr>
+<tr>
+<td><strong>完全免試入學</strong></td>
+<td>全區</td>
+<td>1校1科</td>
+<td>否</td>
+<td>-</td>
+<td>較早</td>
+<td>私校為主，不看會考</td>
+</tr>
+<tr>
+<td><strong>優先免試入學</strong></td>
+<td>指定學校</td>
+<td>1校1科</td>
+<td>部分採計</td>
+<td>72分</td>
+<td>較早</td>
+<td>公立學校，電腦分發</td>
+</tr>
+<tr>
+<td><strong>特色招生</strong></td>
+<td>4所指定學校</td>
+<td>1所</td>
+<td>是(門檻)</td>
+<td>-</td>
+<td>會考後</td>
+<td>需額外考試</td>
+</tr>
+<tr>
+<td><strong>專業群科</strong></td>
+<td>技術型學校</td>
+<td>依報名</td>
+<td>是</td>
+<td>-</td>
+<td>4/11術科</td>
+<td>適合技藝班學生</td>
+</tr>
+</tbody></table><h3>🏥 五專升學管道</h3><table>
+<thead><tr>
+<th>管道名稱</th>
+<th>選擇範圍</th>
+<th>志願填寫</th>
+<th>現場登記</th>
+<th>採計會考</th>
+<th>特色</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><strong>完全免試</strong></td>
+<td>全國一區</td>
+<td>一校一科</td>
+<td>需要</td>
+<td>部分不採計</td>
+<td>最早選擇</td>
+</tr>
+<tr>
+<td><strong>優先免試</strong></td>
+<td>全國一區</td>
+<td>多個志願</td>
+<td>電腦分發</td>
+<td>護理科採計</td>
+<td>電腦排序</td>
+</tr>
+<tr>
+<td><strong>聯合免試</strong></td>
+<td>北中南可同報</td>
+<td>該校所有科系</td>
+<td>需要</td>
+<td>大部分採計</td>
+<td>選校不選科</td>
+</tr>
+</tbody></table><h3>🎨 特殊管道</h3><table>
+<thead><tr>
+<th>管道名稱</th>
+<th>對象</th>
+<th>考試時間</th>
+<th>特殊要求</th>
+<th>備註</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><strong>科學班</strong></td>
+<td>數理資優</td>
+<td>已結束</td>
+<td>筆試+面試</td>
+<td>建中、北一等四校</td>
+</tr>
+<tr>
+<td><strong>藝才班</strong></td>
+<td>藝術專長</td>
+<td>已結束</td>
+<td>術科測驗</td>
+<td>音樂、美術、戲劇、舞蹈</td>
+</tr>
+<tr>
+<td><strong>原住民單招</strong></td>
+<td>原住民學生</td>
+<td>4/11</td>
+<td>筆試</td>
+<td>慈濟大學等</td>
+</tr>
+<tr>
+<td><strong>原住民藝能專班</strong></td>
+<td>原住民+藝能</td>
+<td>-</td>
+<td>術科+體檢</td>
+<td>金山高中、樹林高中</td>
+</tr>
+</tbody></table><p>---</p><h2>📚 會考基本概念</h2><h3>🎯 會考性質</h3>
+<ul><li><strong>定位</strong>：國中畢業能力檢測，類似英檢概念</li>
+<li><strong>強制性</strong>：所有九年級學生都必須參加</li>
+<li><strong>與升學關係</strong>：各校自行決定是否採用會考成績</li>
+</ul>
+<h3>📅 考試安排</h3>
+<ul><li><strong>日期</strong>：5月16-17日</li>
+<li><strong>考場</strong>：原則上在西新北高中</li>
+<li><strong>科目</strong>：國文、英文、數學、社會、自然 + 作文</li>
+</ul>
+<h3>⚠️ 考試當天重點提醒</h3>
+<table>
+<thead><tr>
+<th>日期</th>
+<th>時間</th>
+<th>科目</th>
+<th>特別注意</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><strong>第一天</strong></td>
+<td>1:40-5:00 PM</td>
+<td>國文(含作文)</td>
+<td><strong>中午務必讓孩子休息睡午覺</strong></td>
+</tr>
+<tr>
+<td><strong>第二天</strong></td>
+<td>至12:30 PM</td>
+<td>其他科目</td>
+<td>1:30結束，當天放成績到班群</td>
+</tr>
+</tbody></table><h3>📊 成績計算 (新北區)</h3>
+<ul><li><strong>等級制</strong>：A(精熟)、B(基礎)、C(待加強)</li>
+<li><strong>總分108分組成</strong>：</li>
+</ul>  - 會考成績：5科×7分 + 作文1分 = 36分
+  - 多元學習表現：36分 (均衡學習24分 + 服務學習12分)
+  - 志願序：36分 (每個志願1分，最多34分)</p><p>---</p><h2>🚀 主要升學管道詳解</h2><h3>1️⃣ 基本區免試入學 (主要管道)</h3><p><strong>適用對象</strong>：85%以上學生選擇此管道</p><p><strong>重要特色</strong>：
+<ul><li>📅 <strong>關鍵時間</strong>：6月18日中午12點後確定名額</li>
+<li>🎯 <strong>志願數量</strong>：最多34個志願</li>
+<li>💯 <strong>建議策略</strong>：至少填5個以上，前面填理想，後面填保底</li>
+</ul>
+<strong>比序規則</strong> (同分時比較順序)：
+1. <strong>總積分</strong> (108分)
+2. <strong>會考成績</strong> (國、數、英三科優先比較)
+3. <strong>多元學習表現</strong>
+4. <strong>志願序</strong></p><p><strong>🎯 適合對象建議</strong>：
+<ul><li><strong>30分以上</strong>：建議直接使用此管道，前三志願可選明星學校</li>
+<li><strong>25-30分</strong>：主要選擇，搭配優先免試</li>
+<li><strong>25分以下</strong>：可考慮，但建議搭配其他管道</li>
+</ul>
+---</p><h3>2️⃣ 完全免試入學</h3><p><strong>核心特色</strong>：
+<ul><li>🚫 <strong>不採計會考成績</strong></li>
+<li>🏫 <strong>一校一科限制</strong></li>
+<li>🏢 <strong>私立學校為主</strong></li>
+</ul>
+<strong>比序方式</strong>：
+<ul><li>主要看多元學習表現</li>
+<li>大部分學生都滿分</li>
+<li>最終可能需要抽籤</li>
+</ul>
+<strong>鄰近學校選擇</strong>：
+<ul><li>東海高中 (三重)</li>
+<li>林口高中</li>
+<li>永和高中</li>
+<li>新店高中等</li>
+</ul>
+---</p><h3>3️⃣ 優先免試入學</h3><p><strong>適用學校</strong>：
+<ul><li><strong>公立高中</strong>：板橋高中、海山高中、光復高中、清水高中</li>
+<li><strong>公立高職</strong>：新北高工、新北高商</li>
+</ul>
+<strong>特色</strong>：
+<ul><li>📊 <strong>總分</strong>：72分</li>
+<li>💻 <strong>電腦分發</strong>：不需現場登記</li>
+<li>🎯 <strong>一校一科</strong>：每校只能選一科</li>
+</ul>
+<strong>建議</strong>：會考成績30分以上較不建議使用此管道</p><p>---</p><h3>4️⃣ 五專升學 (三種管道)</h3><p>#### 完全免試
+<ul><li><strong>範圍</strong>：全國一區</li>
+<li><strong>限制</strong>：一校一科</li>
+<li><strong>現場</strong>：需要現場登記</li>
+</ul>
+#### 優先免試  
+<ul><li><strong>範圍</strong>：全國一區</li>
+<li><strong>志願</strong>：多個志願</li>
+<li><strong>分發</strong>：電腦分發</li>
+</ul>
+#### 聯合免試
+<ul><li><strong>範圍</strong>：北中南可同時報名</li>
+<li><strong>選擇</strong>：最後選一區一校</li>
+<li><strong>彈性</strong>：該校所有科系都可選</li>
+</ul>
+<strong>💡 特別提醒</strong>：
+<ul><li>護理科只有五專有，高中沒有</li>
+<li>服務學習從七年級累計至4月17日</li>
+<li>國立學校護理科要採計會考成績</li>
+</ul>
+---</p><h3>5️⃣ 特色招生</h3><p><strong>四所學校限選一所</strong>：
+1. <strong>中正高中</strong>：國際移動力課程 IB/TCP 實驗班
+2. <strong>育成高中</strong>：國際文憑 IB/DCP 班  
+3. <strong>海山高中</strong>：海洋科技班
+4. <strong>麗山高中</strong>：科學班</p><p><strong>考試特色</strong>：
+<ul><li>🚪 <strong>會考門檻</strong>：必須達到門檻才能報考</li>
+<li>📝 <strong>額外考試</strong>：創意思考、邏輯分析等</li>
+<li>🎯 <strong>培養目標</strong>：出國深造或專業領域發展</li>
+<li>📊 <strong>錄取分數</strong>：約30-40分左右</li>
+</ul>
+---</p><h3>6️⃣ 專業群科 (技藝班重要管道)</h3><p><strong>📊 今年現況</strong>：20位同學報名參加</p><p><strong>適合對象</strong>：
+<ul><li>✅ 技藝班學生</li>
+<li>✅ 學科成績不理想但有技術專長</li>
+<li>✅ 對技術操作有興趣的學生</li>
+</ul>
+<strong>考試安排</strong>：
+<ul><li>📅 <strong>術科考試</strong>：4月11日 (新北區統一)</li>
+<li>🏫 <strong>考試地點</strong>：在本校進行  </li>
+<li>📚 <strong>考試內容</strong>：七、八年級技術課程</li>
+</ul>
+<strong>重要提醒</strong>：
+<ul><li>⚠️ 已完成報名，無法補報</li>
+<li>✅ 必須參加術科考試</li>
+<li>🔍 確認有想要的科系再參加</li>
+</ul>
+---</p><h2>⚠️ 重要注意事項</h2><h3>🔒 報名與錄取鐵則</h3><p>#### 一人一校原則
+<ul><li>🚫 錄取報到後就不能再報其他學校</li>
+<li>❌ 不想就讀：錄取後不報到即可</li>
+<li>⏰ 報到後反悔：只有半天時間到該校簽署放棄書</li>
+<li>🔐 系統鎖定：未放棄就無法參加後續階段</li>
+</ul>
+#### 重要文件提醒
+<ul><li>✍️ <strong>所有報名表需家長雙方簽名</strong></li>
+<li>📄 <strong>使用學校專用紙張</strong>：不可自行列印</li>
+<li>📋 <strong>資料錯誤</strong>：務必向註冊組更正</li>
+<li>🎓 <strong>畢業證書</strong>：確定就讀學校才交付</li>
+</ul>
+<h3>🛡️ 防範不當招生</h3><p>#### 不要相信的招生話術
+<ul><li>❌ 電話、傳真的非正式招生</li>
+<li>❌ "提早來有優惠"等話術  </li>
+<li>❌ 要求預繳任何費用</li>
+<li>❌ 「先交畢業證書保證錄取」</li>
+</ul>
+#### 正確作法
+<ul><li>✅ 只相信正式招生簡章</li>
+<li>✅ 所有費用等正式錄取後再繳</li>
+<li>✅ 畢業證書確定就讀才交付</li>
+<li>✅ 有疑問找註冊組確認</li>
+</ul>
+<h3>💰 在地就學獎學金</h3><p>#### 申請條件
+<ul><li><strong>成績要求</strong>：會考成績達到一定等級</li>
+<li><strong>地區限制</strong>：必須就讀新北市學校  </li>
+<li><strong>轉學限制</strong>：中途轉到其他縣市需繳回</li>
+</ul>
+#### 適用學校
+包含公立優免對應學校，詳細清單依當年度公告</p><p>---</p><h2>🌐 實用資源</h2><h3>📱 重要網站</h3>
+<ul><li><strong>升學資訊查詢</strong>：「國中升高中、高中升大學」網站</li>
+<li><strong>功能</strong>：完整的選校、選科系資訊</li>
+<li><strong>建議</strong>：家長可多加利用查詢</li>
+</ul>
+<h3>📖 參考資料</h3>
+<ul><li><strong>升學手冊</strong>：每位九年級學生都有一本</li>
+<li><strong>內容</strong>：詳細資料和網站連結</li>
+<li><strong>小卡片測驗</strong>：性向測驗參考</li>
+</ul>
+---</p><h2>🎯 給家長的最終建議</h2><h3>💭 決策重點</h3>
+1. <strong>與孩子充分討論</strong>：找最適合的升學管道
+2. <strong>避免跟風心態</strong>：不要因同學選擇而盲從  
+3. <strong>考慮長遠發展</strong>：避免暑假後想重讀的情況
+4. <strong>善用多元管道</strong>：不要只押寶一個管道</p><h3>📈 策略建議</h3>
+<ul><li><strong>高分學生</strong> (30分以上)：直接走聯合免試，志願填好填滿</li>
+<li><strong>中等學生</strong> (25-30分)：聯合免試為主，搭配優先免試  </li>
+<li><strong>需要協助學生</strong> (25分以下)：考慮完全免試或專業群科</li>
+</ul>
+<h3>⚡ 關鍵提醒</h3>
+<ul><li><strong>現在沒有重考班</strong>：選錯學校重讀困難</li>
+<li><strong>把握現有時間</strong>：好好規劃，避免倉促決定</li>
+<li><strong>保持彈性思考</strong>：多元管道提供不同可能性</li>
+</ul>
+---</p><p>*📝 最後更新：2026年3月*  
+*📧 如有疑問請洽註冊組或導師*</p>
+        </div>
+        
+        <div class="footer">
+            <p>📅 最後更新：2026年03月06日 21:47</p>
+            <p>🤖 由 Javis (OpenClaw) 自動化處理 | ⚡ 支援 Mermaid 流程圖</p>
+            <p>📧 聯絡信箱：i94ivoice@gmail.com</p>
+        </div>
+    </div>
+    
+    
+    <script>
+        // 初始化 Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            },
+            sequence: {
+                diagramMarginX: 50,
+                diagramMarginY: 10,
+                actorMargin: 50,
+                width: 150,
+                height: 65,
+                boxMargin: 10,
+                boxTextMargin: 5,
+                noteMargin: 10,
+                messageMargin: 35,
+                mirrorActors: true,
+                bottomMarginAdj: 1,
+                useMaxWidth: true
+            },
+            gantt: {
+                titleTopMargin: 25,
+                barHeight: 20,
+                fontFamily: '"SF Pro Text", -apple-system, BlinkMacSystemFont',
+                fontSize: 11,
+                fontWeight: 'normal',
+                gridLineStartPadding: 35,
+                numberSectionStyles: 4,
+                axisFormat: '%m-%d'
+            }
+        });
+        
+        // 確保圖表在頁面載入後正確顯示
+        document.addEventListener('DOMContentLoaded', function() {
+            // 重新渲染所有 mermaid 圖表
+            mermaid.contentLoaded();
+            
+            // 為移動設備優化
+            setTimeout(() => {
+                const mermaidElements = document.querySelectorAll('.mermaid svg');
+                mermaidElements.forEach(svg => {
+                    svg.style.maxWidth = '100%';
+                    svg.style.height = 'auto';
+                });
+            }, 1000);
+        });
+        
+        // 添加點擊放大功能
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.mermaid')) {
+                const container = e.target.closest('.mermaid-container');
+                if (container.classList.contains('fullscreen')) {
+                    container.classList.remove('fullscreen');
+                    container.style.position = '';
+                    container.style.top = '';
+                    container.style.left = '';
+                    container.style.width = '';
+                    container.style.height = '';
+                    container.style.zIndex = '';
+                    container.style.background = '';
+                } else {
+                    container.classList.add('fullscreen');
+                    container.style.position = 'fixed';
+                    container.style.top = '10px';
+                    container.style.left = '10px';
+                    container.style.width = 'calc(100vw - 20px)';
+                    container.style.height = 'calc(100vh - 20px)';
+                    container.style.zIndex = '9999';
+                    container.style.background = 'white';
+                    container.style.overflow = 'auto';
+                }
+            }
+        });
+    </script>
+        
+</body>
+</html>

@@ -3,96 +3,396 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>基本測試</title>
+    <title>🐝 蜜蜂射擊大戰</title>
 </head>
-<body style="margin:0; padding:20px; background:#87CEEB; font-family:Arial;">
+<body style="margin:0; padding:10px; background:#87CEEB; font-family:Arial; text-align:center;">
     
-    <h1 style="color:#2E8B57; text-align:center;">🐝 基本測試</h1>
+    <h1 style="color:#2E8B57; margin:10px 0; font-size:24px;">🐝 蜜蜂射擊大戰 🎮</h1>
     
-    <div style="background:#FFFF00; padding:20px; margin:20px 0; border:3px solid #FF0000; text-align:center;">
-        <h2>如果你能看到這個黃色框框，說明 HTML 和 CSS 正常</h2>
+    <div style="background:#228B22; color:white; padding:10px; margin:10px 0; border-radius:5px; font-weight:bold;">
+        💯 分數: <span id="score">0</span> | ❤️ 生命: <span id="lives">3</span> | 🎯 擊殺: <span id="kills">0</span>
     </div>
     
-    <div style="background:#FFFFFF; padding:15px; margin:10px 0; border:2px solid #000000;">
-        <p><strong>測試1:</strong> 白色背景框</p>
-        <p><strong>測試2:</strong> 黑色邊框</p>
-        <p><strong>測試3:</strong> 這些文字應該是黑色</p>
-    </div>
-    
-    <div style="width:300px; height:200px; background:#00FF00; border:5px solid #0000FF; margin:20px auto;">
-        <p style="color:#FFFFFF; text-align:center; padding:80px 0; margin:0; font-size:18px; font-weight:bold;">
-            綠色區域<br>藍色邊框
-        </p>
-    </div>
-    
-    <canvas id="testCanvas" width="300" height="150" style="display:block; margin:20px auto; border:3px solid #FF00FF; background:#FFD700;">
-        你的瀏覽器不支援 Canvas
+    <canvas id="gameCanvas" width="320" height="400" 
+        style="display:block; margin:10px auto; border:3px solid #228B22; background:#98FB98; border-radius:10px;">
     </canvas>
     
-    <div style="text-align:center; margin:20px 0;">
-        <button onclick="testCanvas()" style="background:#32CD32; color:white; border:none; padding:15px 30px; font-size:16px; border-radius:5px;">
-            測試 Canvas 繪圖
+    <div style="margin:10px 0;">
+        <button onclick="startGame()" style="background:#32CD32; color:white; border:none; padding:12px 25px; font-size:16px; border-radius:5px; margin:5px;">
+            🎮 開始遊戲
+        </button>
+        <button onclick="toggleSound()" id="soundBtn" style="background:#4169E1; color:white; border:none; padding:12px 20px; font-size:16px; border-radius:5px; margin:5px;">
+            🔊 音效
         </button>
     </div>
     
-    <div id="result" style="background:#F0F0F0; padding:15px; margin:20px 0; border:2px solid #808080; text-align:center;">
-        <strong>測試結果會顯示在這裡</strong>
+    <div style="background:#F0F0F0; padding:10px; margin:10px 0; border-radius:5px; font-size:14px;">
+        📱 <strong>操作說明：</strong><br>
+        觸摸並滑動螢幕控制發射器移動<br>
+        自動射擊 • 躲避紅色炸彈 • 消滅黃色蜜蜂得分
+    </div>
+    
+    <div id="gameOver" style="display:none; background:rgba(255,255,255,0.95); position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); padding:30px; border-radius:10px; border:3px solid #DC143C; text-align:center; z-index:1000;">
+        <h2 style="color:#DC143C; margin:0 0 15px 0;">🎮 遊戲結束！</h2>
+        <p style="font-size:18px; margin:10px 0;">最終分數: <span id="finalScore">0</span></p>
+        <p style="font-size:16px; margin:10px 0;">擊殺數: <span id="finalKills">0</span></p>
+        <button onclick="restartGame()" style="background:#32CD32; color:white; border:none; padding:12px 25px; font-size:16px; border-radius:5px; margin:10px;">
+            🚀 重新開始
+        </button>
     </div>
 
     <script>
-        console.log('JavaScript 開始執行');
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
         
-        function testCanvas() {
-            console.log('testCanvas 函數被調用');
-            
-            const canvas = document.getElementById('testCanvas');
-            const result = document.getElementById('result');
-            
-            if (!canvas) {
-                result.innerHTML = '❌ 找不到 Canvas 元素';
-                return;
+        // 遊戲狀態
+        let gameRunning = false;
+        let score = 0;
+        let lives = 3;
+        let kills = 0;
+        let soundEnabled = true;
+        let gameTime = 0;
+        let animationId;
+        
+        // 遊戲物件
+        let player = { x: 160, y: 350, width: 30, height: 20 };
+        let bullets = [];
+        let bees = [];
+        let enemyBullets = [];
+        
+        // 時間控制
+        let lastShot = 0;
+        let lastBeeSpawn = 0;
+        
+        // 觸控
+        let isTouch = false;
+        let lastTouchX = null;
+        
+        // 音效系統（簡化版）
+        let audioContext = null;
+        
+        function initAudio() {
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            } catch (e) {
+                console.log('音效初始化失敗');
             }
-            
-            const ctx = canvas.getContext('2d');
-            if (!ctx) {
-                result.innerHTML = '❌ 無法取得 Canvas Context';
-                return;
-            }
-            
-            // 清除 Canvas
-            ctx.clearRect(0, 0, 300, 150);
-            
-            // 繪製藍色矩形
-            ctx.fillStyle = '#0000FF';
-            ctx.fillRect(50, 25, 100, 50);
-            
-            // 繪製紅色圓形
-            ctx.fillStyle = '#FF0000';
-            ctx.beginPath();
-            ctx.arc(200, 75, 30, 0, 2 * Math.PI);
-            ctx.fill();
-            
-            // 繪製文字
-            ctx.fillStyle = '#000000';
-            ctx.font = '16px Arial';
-            ctx.fillText('Canvas 測試成功!', 80, 120);
-            
-            result.innerHTML = '✅ Canvas 繪圖測試完成！如果你看到藍色矩形、紅色圓形和黑色文字，表示 Canvas 正常工作。';
-            
-            console.log('Canvas 測試完成');
         }
         
-        // 頁面載入後自動執行測試
-        window.addEventListener('load', function() {
-            console.log('頁面載入完成');
-            
-            setTimeout(function() {
-                console.log('自動執行 Canvas 測試');
-                testCanvas();
-            }, 1000);
-        });
+        function playSound(freq, duration = 0.1, volume = 0.3) {
+            if (!soundEnabled || !audioContext) return;
+            try {
+                const osc = audioContext.createOscillator();
+                const gain = audioContext.createGain();
+                osc.connect(gain);
+                gain.connect(audioContext.destination);
+                osc.frequency.value = freq;
+                osc.type = 'square';
+                gain.gain.setValueAtTime(0, audioContext.currentTime);
+                gain.gain.linearRampToValueAtTime(volume, audioContext.currentTime + 0.01);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
+                osc.start();
+                osc.stop(audioContext.currentTime + duration);
+            } catch (e) {}
+        }
         
-        console.log('JavaScript 腳本載入完成');
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const btn = document.getElementById('soundBtn');
+            btn.innerHTML = soundEnabled ? '🔊 音效' : '🔇 靜音';
+            btn.style.background = soundEnabled ? '#4169E1' : '#808080';
+            if (soundEnabled) playSound(660, 0.1);
+        }
+        
+        // 遊戲初始化
+        function initGame() {
+            console.log('初始化遊戲');
+            score = 0;
+            lives = 3;
+            kills = 0;
+            bullets = [];
+            bees = [];
+            enemyBullets = [];
+            player.x = 160;
+            gameTime = 0;
+            gameRunning = false;
+            lastShot = 0;
+            lastBeeSpawn = 0;
+            updateUI();
+            draw();
+        }
+        
+        function updateUI() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('lives').textContent = lives;
+            document.getElementById('kills').textContent = kills;
+        }
+        
+        function startGame() {
+            console.log('開始遊戲');
+            if (audioContext && audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+            
+            gameRunning = true;
+            document.getElementById('gameOver').style.display = 'none';
+            playSound(523, 0.2); // 開始音效
+            
+            if (navigator.vibrate) navigator.vibrate(100);
+            
+            gameLoop();
+        }
+        
+        function restartGame() {
+            initGame();
+            startGame();
+        }
+        
+        // 觸控處理
+        function setupTouch() {
+            function handleStart(e) {
+                e.preventDefault();
+                isTouch = true;
+                const rect = canvas.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                lastTouchX = (clientX - rect.left) * (320 / rect.width);
+            }
+            
+            function handleMove(e) {
+                e.preventDefault();
+                if (!isTouch || !gameRunning) return;
+                
+                const rect = canvas.getBoundingClientRect();
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const touchX = (clientX - rect.left) * (320 / rect.width);
+                
+                if (lastTouchX !== null) {
+                    const moveDistance = touchX - lastTouchX;
+                    player.x += moveDistance;
+                    player.x = Math.max(15, Math.min(305, player.x));
+                }
+                lastTouchX = touchX;
+            }
+            
+            function handleEnd(e) {
+                e.preventDefault();
+                isTouch = false;
+                lastTouchX = null;
+            }
+            
+            canvas.addEventListener('touchstart', handleStart, { passive: false });
+            canvas.addEventListener('touchmove', handleMove, { passive: false });
+            canvas.addEventListener('touchend', handleEnd, { passive: false });
+            canvas.addEventListener('mousedown', handleStart);
+            canvas.addEventListener('mousemove', handleMove);
+            canvas.addEventListener('mouseup', handleEnd);
+            
+            document.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+        }
+        
+        // 遊戲邏輯更新
+        function updateGame() {
+            if (!gameRunning) return;
+            
+            gameTime++;
+            
+            // 自動射擊
+            if (Date.now() - lastShot > 250) {
+                bullets.push({ x: player.x, y: player.y - 10, width: 3, height: 8 });
+                lastShot = Date.now();
+                playSound(800, 0.05, 0.2);
+            }
+            
+            // 生成蜜蜂
+            if (Date.now() - lastBeeSpawn > 1500 - Math.min(gameTime * 2, 1000)) {
+                bees.push({
+                    x: Math.random() * 280 + 20,
+                    y: -20,
+                    width: 25,
+                    height: 20,
+                    speed: 1 + Math.random(),
+                    lastShot: 0
+                });
+                lastBeeSpawn = Date.now();
+            }
+            
+            // 更新子彈
+            for (let i = bullets.length - 1; i >= 0; i--) {
+                bullets[i].y -= 5;
+                if (bullets[i].y < 0) bullets.splice(i, 1);
+            }
+            
+            // 更新蜜蜂
+            for (let i = bees.length - 1; i >= 0; i--) {
+                bees[i].y += bees[i].speed;
+                
+                // 蜜蜂射擊
+                if (Date.now() - bees[i].lastShot > 1000 + Math.random() * 2000) {
+                    enemyBullets.push({
+                        x: bees[i].x,
+                        y: bees[i].y + 15,
+                        width: 4,
+                        height: 6
+                    });
+                    bees[i].lastShot = Date.now();
+                }
+                
+                if (bees[i].y > 400) bees.splice(i, 1);
+            }
+            
+            // 更新敵人子彈
+            for (let i = enemyBullets.length - 1; i >= 0; i--) {
+                enemyBullets[i].y += 3;
+                if (enemyBullets[i].y > 400) enemyBullets.splice(i, 1);
+            }
+            
+            checkCollisions();
+        }
+        
+        function checkCollisions() {
+            // 玩家子彈擊中蜜蜂
+            for (let i = bullets.length - 1; i >= 0; i--) {
+                for (let j = bees.length - 1; j >= 0; j--) {
+                    if (isColliding(bullets[i], bees[j])) {
+                        bullets.splice(i, 1);
+                        bees.splice(j, 1);
+                        score += 10;
+                        kills++;
+                        updateUI();
+                        
+                        playSound(150, 0.2, 0.4); // 爆炸音效
+                        if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+                        break;
+                    }
+                }
+            }
+            
+            // 敵人攻擊玩家
+            for (let i = enemyBullets.length - 1; i >= 0; i--) {
+                if (isColliding(enemyBullets[i], player)) {
+                    enemyBullets.splice(i, 1);
+                    lives--;
+                    updateUI();
+                    
+                    playSound(300, 0.3, 0.5); // 被擊中音效
+                    if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+                    
+                    if (lives <= 0) endGame();
+                }
+            }
+            
+            // 蜜蜂撞擊玩家
+            for (let i = bees.length - 1; i >= 0; i--) {
+                if (isColliding(bees[i], player)) {
+                    bees.splice(i, 1);
+                    lives--;
+                    updateUI();
+                    
+                    playSound(250, 0.3, 0.5);
+                    if (navigator.vibrate) navigator.vibrate([300, 100, 300]);
+                    
+                    if (lives <= 0) endGame();
+                }
+            }
+        }
+        
+        function isColliding(obj1, obj2) {
+            return obj1.x < obj2.x + obj2.width &&
+                   obj1.x + obj1.width > obj2.x &&
+                   obj1.y < obj2.y + obj2.height &&
+                   obj1.y + obj1.height > obj2.y;
+        }
+        
+        // 繪圖
+        function draw() {
+            // 清除畫布
+            ctx.clearRect(0, 0, 320, 400);
+            
+            // 背景漸層
+            const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+            gradient.addColorStop(0, '#87CEEB');
+            gradient.addColorStop(1, '#98FB98');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 320, 400);
+            
+            // 背景雲朵
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+            for (let i = 0; i < 3; i++) {
+                const x = (gameTime * 0.3 + i * 100) % 350 - 25;
+                const y = 40 + i * 30;
+                ctx.beginPath();
+                ctx.arc(x, y, 10, 0, Math.PI * 2);
+                ctx.arc(x + 12, y, 15, 0, Math.PI * 2);
+                ctx.arc(x + 24, y, 10, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            // 玩家發射器
+            ctx.fillStyle = '#4169E1';
+            ctx.fillRect(player.x - 15, player.y - 10, 30, 20);
+            ctx.fillStyle = '#191970';
+            ctx.fillRect(player.x - 2, player.y - 15, 4, 8);
+            ctx.fillStyle = '#FFD700';
+            ctx.fillRect(player.x - 12, player.y - 3, 24, 3);
+            
+            // 玩家子彈
+            ctx.fillStyle = '#FFD700';
+            bullets.forEach(bullet => {
+                ctx.fillRect(bullet.x - 1, bullet.y, 3, 8);
+            });
+            
+            // 蜜蜂
+            ctx.fillStyle = '#FFD700';
+            bees.forEach(bee => {
+                // 身體
+                ctx.fillRect(bee.x - 12, bee.y - 10, 24, 20);
+                // 條紋
+                ctx.fillStyle = '#000000';
+                ctx.fillRect(bee.x - 8, bee.y - 2, 2, 4);
+                ctx.fillRect(bee.x, bee.y - 2, 2, 4);
+                ctx.fillRect(bee.x + 8, bee.y - 2, 2, 4);
+                // 翅膀
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                ctx.fillRect(bee.x - 15, bee.y - 8, 6, 3);
+                ctx.fillRect(bee.x + 10, bee.y - 8, 6, 3);
+                ctx.fillStyle = '#FFD700';
+            });
+            
+            // 敵人子彈
+            ctx.fillStyle = '#DC143C';
+            enemyBullets.forEach(bullet => {
+                ctx.fillRect(bullet.x - 2, bullet.y, 4, 6);
+            });
+        }
+        
+        function endGame() {
+            gameRunning = false;
+            document.getElementById('finalScore').textContent = score;
+            document.getElementById('finalKills').textContent = kills;
+            document.getElementById('gameOver').style.display = 'block';
+            
+            playSound(220, 0.5, 0.4); // 遊戲結束音效
+            if (navigator.vibrate) navigator.vibrate([500, 200, 500]);
+            
+            if (animationId) cancelAnimationFrame(animationId);
+        }
+        
+        function gameLoop() {
+            if (!gameRunning) return;
+            
+            updateGame();
+            draw();
+            
+            animationId = requestAnimationFrame(gameLoop);
+        }
+        
+        // 初始化
+        window.addEventListener('load', () => {
+            console.log('遊戲載入完成');
+            initAudio();
+            setupTouch();
+            initGame();
+        });
     </script>
 
 </body>

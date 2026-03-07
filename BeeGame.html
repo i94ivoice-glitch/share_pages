@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>🐝 蜜蜂射擊大戰</title>
     <style>
         * {
@@ -22,6 +22,7 @@
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
+            overflow: hidden;
         }
         
         .game-title {
@@ -44,6 +45,7 @@
         #gameCanvas {
             display: block;
             background: linear-gradient(180deg, #87CEEB 0%, #98FB98 100%);
+            touch-action: none;
         }
         
         .score-panel {
@@ -58,6 +60,24 @@
             font-size: 1.2em;
             color: #2E8B57;
             text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+            pointer-events: none;
+        }
+        
+        .start-hint {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255,255,255,0.9);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            z-index: 150;
+            border: 3px solid #228B22;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            color: #2E8B57;
+            font-size: 1.1em;
+            font-weight: bold;
         }
         
         .game-over {
@@ -138,11 +158,16 @@
             <div>🎯 擊殺: <span id="kills">0</span></div>
         </div>
         
+        <div class="start-hint" id="startHint">
+            🎮 觸摸螢幕開始遊戲<br>
+            👆 滑動控制發射器移動
+        </div>
+        
         <div class="game-over" id="gameOver">
             <h2>🎮 遊戲結束！</h2>
             <p>最終分數: <span id="finalScore">0</span></p>
             <p>擊殺數: <span id="finalKills">0</span></p>
-            <button class="btn" onclick="startGame()">🚀 重新開始</button>
+            <button class="btn" onclick="restartGame()">🚀 重新開始</button>
         </div>
     </div>
     
@@ -156,6 +181,7 @@
         
         // 遊戲狀態
         let gameRunning = false;
+        let gameStarted = false;
         let score = 0;
         let lives = 3;
         let kills = 0;
@@ -178,6 +204,7 @@
         // 觸控控制
         let touchX = null;
         let lastTouchX = null;
+        let isTouch = false;
         
         // 遊戲計時
         let lastBeeSpawn = 0;
@@ -197,7 +224,9 @@
             gameTime = 0;
             lastBeeSpawn = 0;
             lastShot = 0;
+            gameStarted = false;
             updateUI();
+            draw(); // 繪製初始畫面
         }
         
         function updateUI() {
@@ -207,52 +236,103 @@
         }
         
         function startGame() {
-            initGame();
+            if (gameStarted) return;
+            
             gameRunning = true;
+            gameStarted = true;
+            document.getElementById('startHint').style.display = 'none';
             document.getElementById('gameOver').style.display = 'none';
+            
             gameLoop();
         }
         
-        // 添加觸控事件
-        canvas.addEventListener('touchstart', handleTouch);
-        canvas.addEventListener('touchmove', handleTouch);
-        canvas.addEventListener('touchend', () => {
-            touchX = null;
-            lastTouchX = null;
-        });
+        function restartGame() {
+            initGame();
+            startGame();
+        }
         
-        // 滑鼠事件（桌面測試）
-        canvas.addEventListener('mousedown', (e) => {
-            const rect = canvas.getBoundingClientRect();
-            touchX = e.clientX - rect.left;
-            lastTouchX = touchX;
-        });
-        
-        canvas.addEventListener('mousemove', (e) => {
-            if (touchX !== null) {
+        // 觸控事件處理 - 改進版
+        function setupTouchEvents() {
+            // 觸控開始
+            function handleTouchStart(e) {
+                e.preventDefault();
+                if (!gameStarted) {
+                    startGame();
+                    return;
+                }
+                
+                const rect = canvas.getBoundingClientRect();
+                const touch = e.touches[0];
+                touchX = touch.clientX - rect.left;
+                lastTouchX = touchX;
+                isTouch = true;
+            }
+            
+            // 觸控移動
+            function handleTouchMove(e) {
+                e.preventDefault();
+                if (!gameRunning || !isTouch) return;
+                
+                const rect = canvas.getBoundingClientRect();
+                const touch = e.touches[0];
+                touchX = touch.clientX - rect.left;
+            }
+            
+            // 觸控結束
+            function handleTouchEnd(e) {
+                e.preventDefault();
+                touchX = null;
+                lastTouchX = null;
+                isTouch = false;
+            }
+            
+            // 滑鼠事件（桌面測試用）
+            function handleMouseDown(e) {
+                if (!gameStarted) {
+                    startGame();
+                    return;
+                }
+                
+                const rect = canvas.getBoundingClientRect();
+                touchX = e.clientX - rect.left;
+                lastTouchX = touchX;
+                isTouch = true;
+            }
+            
+            function handleMouseMove(e) {
+                if (!gameRunning || !isTouch) return;
+                
                 const rect = canvas.getBoundingClientRect();
                 touchX = e.clientX - rect.left;
             }
-        });
-        
-        canvas.addEventListener('mouseup', () => {
-            touchX = null;
-            lastTouchX = null;
-        });
-        
-        function handleTouch(e) {
-            e.preventDefault();
-            const rect = canvas.getBoundingClientRect();
-            if (e.touches.length > 0) {
-                touchX = e.touches[0].clientX - rect.left;
-                if (lastTouchX === null) lastTouchX = touchX;
+            
+            function handleMouseUp(e) {
+                touchX = null;
+                lastTouchX = null;
+                isTouch = false;
             }
+            
+            // 綁定事件
+            canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
+            canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
+            canvas.addEventListener('touchend', handleTouchEnd, { passive: false });
+            
+            canvas.addEventListener('mousedown', handleMouseDown);
+            canvas.addEventListener('mousemove', handleMouseMove);
+            canvas.addEventListener('mouseup', handleMouseUp);
+            
+            // 防止頁面滾動
+            document.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+            }, { passive: false });
         }
         
         function updatePlayer() {
+            if (!gameRunning) return;
+            
             if (touchX !== null && lastTouchX !== null) {
                 const moveDistance = touchX - lastTouchX;
-                player.x += moveDistance;
+                player.x += moveDistance * 1.5; // 提高敏感度
                 lastTouchX = touchX;
             }
             
@@ -274,7 +354,9 @@
         }
         
         function spawnBee() {
-            if (Date.now() - lastBeeSpawn > 1500 - Math.min(gameTime * 10, 1000)) {
+            if (!gameRunning) return;
+            
+            if (Date.now() - lastBeeSpawn > 1500 - Math.min(gameTime * 5, 1000)) {
                 bees.push({
                     x: Math.random() * (canvas.width - 40) + 20,
                     y: -30,
@@ -289,6 +371,8 @@
         }
         
         function updateBees() {
+            if (!gameRunning) return;
+            
             for (let i = bees.length - 1; i >= 0; i--) {
                 bees[i].y += bees[i].speed;
                 
@@ -312,6 +396,8 @@
         }
         
         function updateBullets() {
+            if (!gameRunning) return;
+            
             // 玩家子彈
             for (let i = bullets.length - 1; i >= 0; i--) {
                 bullets[i].y -= bullets[i].speed;
@@ -330,6 +416,8 @@
         }
         
         function checkCollisions() {
+            if (!gameRunning) return;
+            
             // 玩家子彈擊中蜜蜂
             for (let i = bullets.length - 1; i >= 0; i--) {
                 for (let j = bees.length - 1; j >= 0; j--) {
@@ -433,17 +521,23 @@
             // 繪製背景雲朵
             drawClouds();
             
-            // 繪製玩家
-            drawPlayer();
-            
-            // 繪製子彈
-            drawBullets();
-            
-            // 繪製蜜蜂
-            drawBees();
-            
-            // 繪製敵人子彈
-            drawEnemyBullets();
+            // 只有遊戲開始後才繪製遊戲物件
+            if (gameStarted) {
+                // 繪製玩家
+                drawPlayer();
+                
+                // 繪製子彈
+                drawBullets();
+                
+                // 繪製蜜蜂
+                drawBees();
+                
+                // 繪製敵人子彈
+                drawEnemyBullets();
+            } else {
+                // 未開始時顯示玩家發射器
+                drawPlayer();
+            }
             
             // 繪製粒子效果
             drawParticles();
@@ -476,7 +570,7 @@
             ctx.fillStyle = '#FFD700';
             ctx.fillRect(player.x - player.width/2 + 5, player.y - 5, player.width - 10, 5);
             
-            // 自動射擊
+            // 自動射擊（僅遊戲運行時）
             if (gameRunning) {
                 shootBullet();
             }
@@ -547,6 +641,7 @@
         
         function endGame() {
             gameRunning = false;
+            gameStarted = false;
             document.getElementById('finalScore').textContent = score;
             document.getElementById('finalKills').textContent = kills;
             document.getElementById('gameOver').style.display = 'block';
@@ -572,13 +667,11 @@
             animationId = requestAnimationFrame(gameLoop);
         }
         
-        // 防止頁面滾動
-        document.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-        }, { passive: false });
-        
-        // 啟動遊戲
-        initGame();
+        // 初始化
+        window.addEventListener('load', () => {
+            setupTouchEvents();
+            initGame();
+        });
     </script>
 </body>
 </html>

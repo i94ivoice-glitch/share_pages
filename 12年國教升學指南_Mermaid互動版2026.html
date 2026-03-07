@@ -256,6 +256,47 @@
             border-bottom-color: #8e44ad;
         }
         
+        /* 平滑滾動 */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* 目錄樣式 */
+        .table-of-contents {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid #3498db;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .table-of-contents h2 {
+            color: #2c3e50;
+            margin: 0 0 20px 0;
+            padding: 0;
+            border: none;
+            font-size: 1.4em;
+            text-align: center;
+        }
+        
+        .table-of-contents ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .table-of-contents li {
+            margin: 8px 0;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: background-color 0.2s ease;
+        }
+        
+        .table-of-contents li:hover {
+            background: rgba(52, 152, 219, 0.1);
+        }
+        
         /* 響應式設計 */
         @media (max-width: 768px) {
             body {
@@ -326,17 +367,17 @@
                 <p>📊 動態渲染 • 🎯 清晰視覺 • 📱 響應式設計</p>
             </div>
             
-            <h2>📋 目錄</h2>
+            <h2 id="目錄">📋 目錄</h2>
 <ul>
-<li>[重要時程表](#重要時程表)</li>
-<li>[升學博覽會資訊](#升學博覽會資訊)</li>
-<li>[升學決策流程圖](#升學決策流程圖)</li>
-<li>[各招生管道摘要表格](#各招生管道摘要表格)</li>
-<li>[會考基本概念](#會考基本概念)</li>
-<li>[主要升學管道詳解](#主要升學管道詳解)</li>
-<li>[重要注意事項](#重要注意事項)</li>
-<li>[官方參考資料](#官方參考資料)</li>
-</ul><p>---</p><h2>⏰ 重要時程表</h2><p><table>
+<li><a href="#重要時程表" style="color: #2c3e50; text-decoration: none; font-weight: 500; transition: color 0.3s ease;" onmouseover="this.style.color='#3498db'" onmouseout="this.style.color='#2c3e50'">重要時程表</a></li>
+<li><a href="#升學博覽會資訊" style="color: #2c3e50; text-decoration: none; font-weight: 500; transition: color 0.3s ease;" onmouseover="this.style.color='#3498db'" onmouseout="this.style.color='#2c3e50'">升學博覽會資訊</a></li>
+<li><a href="#升學決策流程圖" style="color: #2c3e50; text-decoration: none; font-weight: 500; transition: color 0.3s ease;" onmouseover="this.style.color='#3498db'" onmouseout="this.style.color='#2c3e50'">升學決策流程圖</a></li>
+<li><a href="#各招生管道摘要表格" style="color: #2c3e50; text-decoration: none; font-weight: 500; transition: color 0.3s ease;" onmouseover="this.style.color='#3498db'" onmouseout="this.style.color='#2c3e50'">各招生管道摘要表格</a></li>
+<li><a href="#會考基本概念" style="color: #2c3e50; text-decoration: none; font-weight: 500; transition: color 0.3s ease;" onmouseover="this.style.color='#3498db'" onmouseout="this.style.color='#2c3e50'">會考基本概念</a></li>
+<li><a href="#主要升學管道詳解" style="color: #2c3e50; text-decoration: none; font-weight: 500; transition: color 0.3s ease;" onmouseover="this.style.color='#3498db'" onmouseout="this.style.color='#2c3e50'">主要升學管道詳解</a></li>
+<li><a href="#重要注意事項" style="color: #2c3e50; text-decoration: none; font-weight: 500; transition: color 0.3s ease;" onmouseover="this.style.color='#3498db'" onmouseout="this.style.color='#2c3e50'">重要注意事項</a></li>
+<li><a href="#官方參考資料" style="color: #2c3e50; text-decoration: none; font-weight: 500; transition: color 0.3s ease;" onmouseover="this.style.color='#3498db'" onmouseout="this.style.color='#2c3e50'">官方參考資料</a></li>
+</ul><p>---</p><h2 id="重要時程表">⏰ 重要時程表</h2><p><table>
 <thead><tr>
 <th>時間</th>
 <th>重要事項</th>
@@ -412,7 +453,7 @@
 <td><strong>基本區免試放榜</strong></td>
 <td>大部分學生的主要管道</td>
 </tr>
-</tbody></table></p><p>---</p><h2>🎪 升學博覽會資訊</h2><h3>📅 重要展覽活動</h3><p>#### 🌟 3月21日（六）升學博覽會
+</tbody></table></p><p>---</p><h2 id="升學博覽會資訊">🎪 升學博覽會資訊</h2><h3 id="重要展覽活動">📅 重要展覽活動</h3><p>#### 🌟 3月21日（六）升學博覽會
 <strong>雙城同日舉辦，建議都參加！</strong></p><p><table>
 <thead><tr>
 <th>地區</th>
@@ -437,7 +478,7 @@
 <li><strong>時間</strong>：3月1日至6月30日</li>
 <li><strong>網址</strong>：<a href="https://se.ntpc.edu.tw/expo/" target="_blank" style="color: #3498db; text-decoration: none; font-weight: 500; border-bottom: 1px dotted #3498db;">https://se.ntpc.edu.tw/expo/</a></li>
 <li><strong>特色</strong>：全天候開放，詳細學校資訊</li>
-</ul><h3>🎯 參展建議</h3><p><strong>📌 參觀重點</strong>：
+</ul><h3 id="參展建議">🎯 參展建議</h3><p><strong>📌 參觀重點</strong>：
 <ul>
 <li>✅ <strong>收集學校簡章</strong> - 了解各校特色與入學條件</li>
 <li>✅ <strong>諮詢升學管道</strong> - 詢問適合的入學方式</li>
@@ -450,7 +491,7 @@
 <li>📝 <strong>事前準備</strong> - 列出想了解的學校清單</li>
 <li>📱 <strong>線上預習</strong> - 先瀏覽線上博覽會內容</li>
 <li>🎒 <strong>攜帶物品</strong> - 準備袋子裝簡章，筆記本記錄重點</li>
-</ul><p>---</p><h2>🔄 升學決策流程圖</h2><p>        <div class="mermaid-container">
+</ul><p>---</p><h2 id="升學決策流程圖">🔄 升學決策流程圖</h2><p>        <div class="mermaid-container">
             <div class="mermaid-title">
                 🎯 升學決策流程圖 - Mermaid.js 互動版
             </div>
@@ -497,7 +538,7 @@ graph TD
     U --> Y[較早放榜]
     V --> Z[專業群科放榜]
             </div>
-        </div><p>---</p><h2>📊 各招生管道摘要表格</h2><h3>🎯 高中職主要管道</h3><p><table>
+        </div><p>---</p><h2 id="各招生管道摘要表格">📊 各招生管道摘要表格</h2><h3 id="高中職主要管道">🎯 高中職主要管道</h3><p><table>
 <thead><tr>
 <th>管道名稱</th>
 <th>適用範圍</th>
@@ -552,7 +593,7 @@ graph TD
 <td>4/11術科</td>
 <td>適合技藝班學生</td>
 </tr>
-</tbody></table></p><h3>🏥 五專升學管道</h3><p><table>
+</tbody></table></p><h3 id="五專升學管道">🏥 五專升學管道</h3><p><table>
 <thead><tr>
 <th>管道名稱</th>
 <th>選擇範圍</th>
@@ -585,7 +626,7 @@ graph TD
 <td>大部分採計</td>
 <td>選校不選科</td>
 </tr>
-</tbody></table></p><h3>🎨 特殊管道</h3><p><table>
+</tbody></table></p><h3 id="特殊管道">🎨 特殊管道</h3><p><table>
 <thead><tr>
 <th>管道名稱</th>
 <th>對象</th>
@@ -621,17 +662,17 @@ graph TD
 <td>術科+體檢</td>
 <td>金山高中、樹林高中</td>
 </tr>
-</tbody></table></p><p>---</p><h2>📚 會考基本概念</h2><h3>🎯 會考性質</h3>
+</tbody></table></p><p>---</p><h2 id="會考基本概念">📚 會考基本概念</h2><h3 id="會考性質">🎯 會考性質</h3>
 <ul>
 <li><strong>定位</strong>：國中畢業能力檢測，類似英檢概念</li>
 <li><strong>強制性</strong>：所有九年級學生都必須參加</li>
 <li><strong>與升學關係</strong>：各校自行決定是否採用會考成績</li>
-</ul><h3>📅 考試安排</h3>
+</ul><h3 id="考試安排">📅 考試安排</h3>
 <ul>
 <li><strong>日期</strong>：5月16-17日</li>
-<li><strong>考場</strong>：原則上在西新北高中</li>
+<li><strong>考場</strong>：原則上在新北高中</li>
 <li><strong>科目</strong>：國文、英文、數學、社會、自然 + 作文</li>
-</ul><h3>⚠️ 考試當天重點提醒</h3>
+</ul><h3 id="考試當天重點提醒">⚠️ 考試當天重點提醒</h3>
 <table>
 <thead><tr>
 <th>日期</th>
@@ -651,14 +692,14 @@ graph TD
 <td>其他科目</td>
 <td>1:30結束，當天放成績到班群</td>
 </tr>
-</tbody></table></p><h3>📊 成績計算 (新北區)</h3>
+</tbody></table></p><h3 id="成績計算-新北區">📊 成績計算 (新北區)</h3>
 <ul>
 <li><strong>等級制</strong>：A(精熟)、B(基礎)、C(待加強)</li>
 <li><strong>總分108分組成</strong>：</li>
 </ul>
   - 會考成績：5科×7分 + 作文1分 = 36分
   - 多元學習表現：36分 (均衡學習24分 + 服務學習12分)
-  - 志願序：36分 (每個志願1分，最多34分)</p><p>---</p><h2>🚀 主要升學管道詳解</h2><h3>1️⃣ 基本區免試入學 (主要管道)</h3><p><strong>適用對象</strong>：85%以上學生選擇此管道</p><p><strong>重要特色</strong>：
+  - 志願序：36分 (每個志願1分，最多34分)</p><p>---</p><h2 id="主要升學管道詳解">🚀 主要升學管道詳解</h2><h3 id="1-基本區免試入學-主要管道">1️⃣ 基本區免試入學 (主要管道)</h3><p><strong>適用對象</strong>：85%以上學生選擇此管道</p><p><strong>重要特色</strong>：
 <ul>
 <li>📅 <strong>關鍵時間</strong>：6月18日中午12點後確定名額</li>
 <li>🎯 <strong>志願數量</strong>：最多34個志願</li>
@@ -672,7 +713,7 @@ graph TD
 <li><strong>30分以上</strong>：建議直接使用此管道，前三志願可選明星學校</li>
 <li><strong>25-30分</strong>：主要選擇，搭配優先免試</li>
 <li><strong>25分以下</strong>：可考慮，但建議搭配其他管道</li>
-</ul><p>---</p><h3>2️⃣ 完全免試入學</h3><p><strong>核心特色</strong>：
+</ul><p>---</p><h3 id="2-完全免試入學">2️⃣ 完全免試入學</h3><p><strong>核心特色</strong>：
 <ul>
 <li>🚫 <strong>不採計會考成績</strong></li>
 <li>🏫 <strong>一校一科限制</strong></li>
@@ -688,7 +729,7 @@ graph TD
 <li>林口高中</li>
 <li>永和高中</li>
 <li>新店高中等</li>
-</ul><p>---</p><h3>3️⃣ 優先免試入學</h3><p><strong>適用學校</strong>：
+</ul><p>---</p><h3 id="3-優先免試入學">3️⃣ 優先免試入學</h3><p><strong>適用學校</strong>：
 <ul>
 <li><strong>公立高中</strong>：板橋高中、海山高中、光復高中、清水高中</li>
 <li><strong>公立高職</strong>：新北高工、新北高商</li>
@@ -697,7 +738,7 @@ graph TD
 <li>📊 <strong>總分</strong>：72分</li>
 <li>💻 <strong>電腦分發</strong>：不需現場登記</li>
 <li>🎯 <strong>一校一科</strong>：每校只能選一科</li>
-</ul><p><strong>建議</strong>：會考成績30分以上較不建議使用此管道</p><p>---</p><h3>4️⃣ 五專升學 (三種管道)</h3><p>#### 完全免試
+</ul><p><strong>建議</strong>：會考成績30分以上較不建議使用此管道</p><p>---</p><h3 id="4-五專升學-三種管道">4️⃣ 五專升學 (三種管道)</h3><p>#### 完全免試
 <ul>
 <li><strong>範圍</strong>：全國一區</li>
 <li><strong>限制</strong>：一校一科</li>
@@ -717,7 +758,7 @@ graph TD
 <li>護理科只有五專有，高中沒有</li>
 <li>服務學習從七年級累計至4月17日</li>
 <li>國立學校護理科要採計會考成績</li>
-</ul><p>---</p><h3>5️⃣ 特色招生</h3><p><strong>四所學校限選一所</strong>：
+</ul><p>---</p><h3 id="5-特色招生">5️⃣ 特色招生</h3><p><strong>四所學校限選一所</strong>：
 1. <strong>中正高中</strong>：國際移動力課程 IB/TCP 實驗班
 2. <strong>育成高中</strong>：國際文憑 IB/DCP 班  
 3. <strong>海山高中</strong>：海洋科技班
@@ -727,7 +768,7 @@ graph TD
 <li>📝 <strong>額外考試</strong>：創意思考、邏輯分析等</li>
 <li>🎯 <strong>培養目標</strong>：出國深造或專業領域發展</li>
 <li>📊 <strong>錄取分數</strong>：約30-40分左右</li>
-</ul><p>---</p><h3>6️⃣ 專業群科 (技藝班重要管道)</h3><p><strong>📊 今年現況</strong>：20位同學報名參加</p><p><strong>適合對象</strong>：
+</ul><p>---</p><h3 id="6-專業群科-技藝班重要管道">6️⃣ 專業群科 (技藝班重要管道)</h3><p><strong>📊 今年現況</strong>：20位同學報名參加</p><p><strong>適合對象</strong>：
 <ul>
 <li>✅ 技藝班學生</li>
 <li>✅ 學科成績不理想但有技術專長</li>
@@ -742,7 +783,7 @@ graph TD
 <li>⚠️ 已完成報名，無法補報</li>
 <li>✅ 必須參加術科考試</li>
 <li>🔍 確認有想要的科系再參加</li>
-</ul><p>---</p><h2>⚠️ 重要注意事項</h2><h3>🔒 報名與錄取鐵則</h3><p>#### 一人一校原則
+</ul><p>---</p><h2 id="重要注意事項">⚠️ 重要注意事項</h2><h3 id="報名與錄取鐵則">🔒 報名與錄取鐵則</h3><p>#### 一人一校原則
 <ul>
 <li>🚫 錄取報到後就不能再報其他學校</li>
 <li>❌ 不想就讀：錄取後不報到即可</li>
@@ -754,7 +795,7 @@ graph TD
 <li>📄 <strong>使用學校專用紙張</strong>：不可自行列印</li>
 <li>📋 <strong>資料錯誤</strong>：務必向註冊組更正</li>
 <li>🎓 <strong>畢業證書</strong>：確定就讀學校才交付</li>
-</ul><h3>🛡️ 防範不當招生</h3><p>#### 不要相信的招生話術
+</ul><h3 id="防範不當招生">🛡️ 防範不當招生</h3><p>#### 不要相信的招生話術
 <ul>
 <li>❌ 電話、傳真的非正式招生</li>
 <li>❌ "提早來有優惠"等話術  </li>
@@ -766,39 +807,39 @@ graph TD
 <li>✅ 所有費用等正式錄取後再繳</li>
 <li>✅ 畢業證書確定就讀才交付</li>
 <li>✅ 有疑問找註冊組確認</li>
-</ul><h3>💰 在地就學獎學金</h3><p>#### 申請條件
+</ul><h3 id="在地就學獎學金">💰 在地就學獎學金</h3><p>#### 申請條件
 <ul>
 <li><strong>成績要求</strong>：會考成績達到一定等級</li>
 <li><strong>地區限制</strong>：必須就讀新北市學校  </li>
 <li><strong>轉學限制</strong>：中途轉到其他縣市需繳回</li>
 </ul><p>#### 適用學校
-包含公立優免對應學校，詳細清單依當年度公告</p><p>---</p><h2>🌐 實用資源</h2><h3>📱 重要網站</h3>
+包含公立優免對應學校，詳細清單依當年度公告</p><p>---</p><h2 id="實用資源">🌐 實用資源</h2><h3 id="重要網站">📱 重要網站</h3>
 <ul>
 <li><strong>升學資訊查詢</strong>：「國中升高中、高中升大學」網站</li>
 <li><strong>功能</strong>：完整的選校、選科系資訊</li>
 <li><strong>建議</strong>：家長可多加利用查詢</li>
-</ul><h3>📖 參考資料</h3>
+</ul><h3 id="參考資料">📖 參考資料</h3>
 <ul>
 <li><strong>升學手冊</strong>：每位九年級學生都有一本</li>
 <li><strong>內容</strong>：詳細資料和網站連結</li>
 <li><strong>小卡片測驗</strong>：性向測驗參考</li>
-</ul><p>---</p><h2>🎯 給家長的最終建議</h2><h3>💭 決策重點</h3>
+</ul><p>---</p><h2 id="給家長的最終建議">🎯 給家長的最終建議</h2><h3 id="決策重點">💭 決策重點</h3>
 1. <strong>與孩子充分討論</strong>：找最適合的升學管道
 2. <strong>避免跟風心態</strong>：不要因同學選擇而盲從  
 3. <strong>考慮長遠發展</strong>：避免暑假後想重讀的情況
-4. <strong>善用多元管道</strong>：不要只押寶一個管道</p><h3>📈 策略建議</h3>
+4. <strong>善用多元管道</strong>：不要只押寶一個管道</p><h3 id="策略建議">📈 策略建議</h3>
 <ul>
 <li><strong>高分學生</strong> (30分以上)：直接走聯合免試，志願填好填滿</li>
 <li><strong>中等學生</strong> (25-30分)：聯合免試為主，搭配優先免試  </li>
 <li><strong>需要協助學生</strong> (25分以下)：考慮完全免試或專業群科</li>
-</ul><h3>⚡ 關鍵提醒</h3>
+</ul><h3 id="關鍵提醒">⚡ 關鍵提醒</h3>
 <ul>
 <li><strong>現在沒有重考班</strong>：選錯學校重讀困難</li>
 <li><strong>把握現有時間</strong>：好好規劃，避免倉促決定</li>
 <li><strong>保持彈性思考</strong>：多元管道提供不同可能性</li>
-</ul><p>---</p><h2>🔗 官方參考資料</h2><h3>📚 教育部官方網站</h3><p>#### 國中畢業生適性入學宣導網站
+</ul><p>---</p><h2 id="官方參考資料">🔗 官方參考資料</h2><h3 id="教育部官方網站">📚 教育部官方網站</h3><p>#### 國中畢業生適性入學宣導網站
 <ul>
-<li><strong>網址</strong>：<a href="https://shs.k12ea.gov.tw/site/adapt-k12ea/" target="_blank" style="color: #3498db; text-decoration: none; font-weight: 500; border-bottom: 1px dotted #3498db;">https://shs.k12ea.gov.tw/site/adapt-k12ea/</a></li>
+<li><strong>網址</strong>：<a href="https://shs.k12ea.gov.tw/site/adapt-k12ea/category?root=134&cid=134" target="_blank" style="color: #3498db; text-decoration: none; font-weight: 500; border-bottom: 1px dotted #3498db;">https://shs.k12ea.gov.tw/site/adapt-k12ea/categ...</a></li>
 <li><strong>主辦</strong>：教育部國民及學前教育署</li>
 <li><strong>內容特色</strong>：</li>
 </ul>
@@ -812,22 +853,22 @@ graph TD
 <li><strong>國中教育會考網站</strong>：會考報名、成績查詢</li>
 <li><strong>技專校院招生委員會聯合會</strong>：五專相關資訊</li>
 <li><strong>各高中職官網</strong>：學校特色與招生簡章</li>
-</ul><h3>📖 建議使用方式</h3>
+</ul><h3 id="建議使用方式">📖 建議使用方式</h3>
 1. <strong>定期查看官網更新</strong>：掌握最新升學政策變動
 2. <strong>善用線上資源</strong>：多元資訊輔助決策
 3. <strong>結合學校輔導</strong>：與導師、輔導室討論
-4. <strong>家長學生共同參與</strong>：一起了解升學管道</p><h3>⚠️ 資訊更新提醒</h3>
+4. <strong>家長學生共同參與</strong>：一起了解升學管道</p><h3 id="資訊更新提醒">⚠️ 資訊更新提醒</h3>
 <ul>
 <li>升學政策可能年度調整，請以官方最新公告為準</li>
 <li>各校招生名額與條件每年會有變動</li>
 <li>重要日期務必確認當年度正確資訊</li>
 </ul><p>---</p><p>*📝 最後更新：2026年3月7日*  
 *📧 如有疑問請洽註冊組或導師*  
-*🌐 官方資訊請參考：<a href="https://shs.k12ea.gov.tw/site/adapt-k12ea/*" target="_blank" style="color: #3498db; text-decoration: none; font-weight: 500; border-bottom: 1px dotted #3498db;">https://shs.k12ea.gov.tw/site/adapt-k12ea/*</a></p>
+*🌐 官方資訊請參考：<a href="https://shs.k12ea.gov.tw/site/adapt-k12ea/category?root=134&cid=134*" target="_blank" style="color: #3498db; text-decoration: none; font-weight: 500; border-bottom: 1px dotted #3498db;">https://shs.k12ea.gov.tw/site/adapt-k12ea/categ...</a></p>
         </div>
         
         <div class="footer">
-            <p><strong>📅 最後更新：2026年03月07日 22:00</strong></p>
+            <p><strong>📅 最後更新：2026年03月07日 22:11</strong></p>
             <p>🤖 由 Javis (OpenClaw) 自動生成 | 🎨 Mermaid.js 專業圖表</p>
             <p>⚡ 互動流程圖 | 🌐 GitHub Pages 部署</p>
             <p>📧 技術支援：i94ivoice@gmail.com</p>

@@ -1,243 +1,99 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>🐝 蜜蜂射擊 - 調試版</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-user-select: none;
-            user-select: none;
-        }
-        
-        body {
-            background: #87CEEB;
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            overflow: hidden;
-            touch-action: none;
-        }
-        
-        .debug-info {
-            color: #2E8B57;
-            font-weight: bold;
-            margin: 10px;
-            font-size: 14px;
-            text-align: center;
-            background: rgba(255,255,255,0.8);
-            padding: 10px;
-            border-radius: 5px;
-            max-width: 320px;
-        }
-        
-        .game-container {
-            position: relative;
-            width: 320px;
-            height: 480px;
-            border: 3px solid #228B22;
-            border-radius: 10px;
-            overflow: hidden;
-            background: #FFFF00;
-            margin: 10px;
-        }
-        
-        #gameCanvas {
-            display: block;
-            width: 100%;
-            height: 100%;
-            background: #FF0000;
-        }
-        
-        .test-buttons {
-            display: flex;
-            gap: 10px;
-            margin: 10px;
-        }
-        
-        .test-btn {
-            background: #32CD32;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12px;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基本測試</title>
 </head>
-<body>
-    <div class="debug-info" id="debugInfo">
-        🔍 調試模式啟動中...
+<body style="margin:0; padding:20px; background:#87CEEB; font-family:Arial;">
+    
+    <h1 style="color:#2E8B57; text-align:center;">🐝 基本測試</h1>
+    
+    <div style="background:#FFFF00; padding:20px; margin:20px 0; border:3px solid #FF0000; text-align:center;">
+        <h2>如果你能看到這個黃色框框，說明 HTML 和 CSS 正常</h2>
     </div>
     
-    <div class="game-container">
-        <canvas id="gameCanvas" width="320" height="480"></canvas>
+    <div style="background:#FFFFFF; padding:15px; margin:10px 0; border:2px solid #000000;">
+        <p><strong>測試1:</strong> 白色背景框</p>
+        <p><strong>測試2:</strong> 黑色邊框</p>
+        <p><strong>測試3:</strong> 這些文字應該是黑色</p>
     </div>
     
-    <div class="test-buttons">
-        <button class="test-btn" onclick="testBasicDraw()">測試1:基本圖形</button>
-        <button class="test-btn" onclick="testColors()">測試2:顏色</button>
-        <button class="test-btn" onclick="testText()">測試3:文字</button>
+    <div style="width:300px; height:200px; background:#00FF00; border:5px solid #0000FF; margin:20px auto;">
+        <p style="color:#FFFFFF; text-align:center; padding:80px 0; margin:0; font-size:18px; font-weight:bold;">
+            綠色區域<br>藍色邊框
+        </p>
     </div>
     
+    <canvas id="testCanvas" width="300" height="150" style="display:block; margin:20px auto; border:3px solid #FF00FF; background:#FFD700;">
+        你的瀏覽器不支援 Canvas
+    </canvas>
+    
+    <div style="text-align:center; margin:20px 0;">
+        <button onclick="testCanvas()" style="background:#32CD32; color:white; border:none; padding:15px 30px; font-size:16px; border-radius:5px;">
+            測試 Canvas 繪圖
+        </button>
+    </div>
+    
+    <div id="result" style="background:#F0F0F0; padding:15px; margin:20px 0; border:2px solid #808080; text-align:center;">
+        <strong>測試結果會顯示在這裡</strong>
+    </div>
+
     <script>
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        const debugInfo = document.getElementById('debugInfo');
+        console.log('JavaScript 開始執行');
         
-        let debugStep = 0;
-        
-        function log(message) {
-            console.log(message);
-            debugStep++;
-            debugInfo.innerHTML = `步驟 ${debugStep}: ${message}`;
-        }
-        
-        function testBasicDraw() {
-            log('🎨 開始基本圖形測試');
+        function testCanvas() {
+            console.log('testCanvas 函數被調用');
+            
+            const canvas = document.getElementById('testCanvas');
+            const result = document.getElementById('result');
             
             if (!canvas) {
-                log('❌ Canvas 元素不存在');
+                result.innerHTML = '❌ 找不到 Canvas 元素';
                 return;
             }
             
+            const ctx = canvas.getContext('2d');
             if (!ctx) {
-                log('❌ 無法取得 Canvas Context');
+                result.innerHTML = '❌ 無法取得 Canvas Context';
                 return;
             }
             
-            log('✅ Canvas 和 Context 正常');
+            // 清除 Canvas
+            ctx.clearRect(0, 0, 300, 150);
             
-            // 測試清除
-            ctx.clearRect(0, 0, 320, 480);
-            log('✅ clearRect 執行完成');
-            
-            // 測試填充背景
-            ctx.fillStyle = '#00FF00';
-            ctx.fillRect(0, 0, 320, 480);
-            log('✅ 背景填充為綠色');
-            
-            // 測試繪製矩形
+            // 繪製藍色矩形
             ctx.fillStyle = '#0000FF';
-            ctx.fillRect(50, 50, 100, 100);
-            log('✅ 藍色矩形 (50,50,100,100)');
+            ctx.fillRect(50, 25, 100, 50);
             
-            // 測試繪製圓形
+            // 繪製紅色圓形
             ctx.fillStyle = '#FF0000';
             ctx.beginPath();
-            ctx.arc(160, 240, 50, 0, 2 * Math.PI);
+            ctx.arc(200, 75, 30, 0, 2 * Math.PI);
             ctx.fill();
-            log('✅ 紅色圓形 (160,240,半徑50)');
             
-            // 測試玩家位置
-            ctx.fillStyle = '#FFFFFF';
-            ctx.fillRect(144, 440, 32, 24);
-            log('✅ 白色玩家矩形 (底部)');
-        }
-        
-        function testColors() {
-            log('🌈 開始顏色測試');
-            
-            const colors = ['#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF'];
-            
-            for (let i = 0; i < colors.length; i++) {
-                ctx.fillStyle = colors[i];
-                ctx.fillRect(i * 50, 50, 45, 100);
-            }
-            
-            log(`✅ 繪製了 ${colors.length} 個顏色條`);
-        }
-        
-        function testText() {
-            log('📝 開始文字測試');
-            
+            // 繪製文字
             ctx.fillStyle = '#000000';
-            ctx.font = '20px Arial';
-            ctx.fillText('測試文字', 100, 200);
-            log('✅ 黑色文字 "測試文字"');
-            
-            ctx.fillStyle = '#FFFFFF';
             ctx.font = '16px Arial';
-            ctx.fillText('Canvas 正常工作!', 80, 250);
-            log('✅ 白色文字 "Canvas 正常工作!"');
+            ctx.fillText('Canvas 測試成功!', 80, 120);
+            
+            result.innerHTML = '✅ Canvas 繪圖測試完成！如果你看到藍色矩形、紅色圓形和黑色文字，表示 Canvas 正常工作。';
+            
+            console.log('Canvas 測試完成');
         }
         
-        function initDebug() {
-            log('🚀 初始化調試系統');
+        // 頁面載入後自動執行測試
+        window.addEventListener('load', function() {
+            console.log('頁面載入完成');
             
-            // 檢查基本元素
-            if (canvas && ctx) {
-                log('✅ Canvas 元素和 Context 都正常');
-                
-                // 設定 Canvas 尺寸
-                canvas.width = 320;
-                canvas.height = 480;
-                log(`✅ Canvas 尺寸設定: ${canvas.width}x${canvas.height}`);
-                
-                // 基本測試
-                setTimeout(() => {
-                    testBasicDraw();
-                }, 500);
-                
-            } else {
-                log('❌ Canvas 或 Context 初始化失敗');
-            }
-        }
-        
-        // 觸控測試
-        canvas.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            const rect = canvas.getBoundingClientRect();
-            const touch = e.touches[0];
-            const x = (touch.clientX - rect.left) * (320 / rect.width);
-            const y = (touch.clientY - rect.top) * (480 / rect.height);
-            
-            // 在觸摸點繪製圓圈
-            ctx.fillStyle = '#FF00FF';
-            ctx.beginPath();
-            ctx.arc(x, y, 20, 0, 2 * Math.PI);
-            ctx.fill();
-            
-            log(`✅ 觸摸點: (${Math.round(x)}, ${Math.round(y)})`);
-        }, { passive: false });
-        
-        canvas.addEventListener('click', (e) => {
-            const rect = canvas.getBoundingClientRect();
-            const x = (e.clientX - rect.left) * (320 / rect.width);
-            const y = (e.clientY - rect.top) * (480 / rect.height);
-            
-            // 在點擊點繪製方塊
-            ctx.fillStyle = '#ORANGE';
-            ctx.fillRect(x - 15, y - 15, 30, 30);
-            
-            log(`✅ 點擊點: (${Math.round(x)}, ${Math.round(y)})`);
+            setTimeout(function() {
+                console.log('自動執行 Canvas 測試');
+                testCanvas();
+            }, 1000);
         });
         
-        // 防止滾動
-        document.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-        }, { passive: false });
-        
-        // 初始化
-        window.addEventListener('load', () => {
-            log('📱 頁面載入完成');
-            setTimeout(initDebug, 100);
-        });
-        
-        // 額外的調試信息
-        window.addEventListener('error', (e) => {
-            log(`❌ JavaScript 錯誤: ${e.message}`);
-        });
-        
-        console.log('🔧 調試版本已載入');
-        log('🔧 調試版本啟動');
+        console.log('JavaScript 腳本載入完成');
     </script>
+
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>🐝 蜜蜂射擊大戰</title>
+    <title>🐝 蜜蜂射擊大戰 - 音效版</title>
     <style>
         * {
             margin: 0;
@@ -63,13 +63,42 @@
             pointer-events: none;
         }
         
+        .audio-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 150;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .audio-btn {
+            background: rgba(255,255,255,0.9);
+            border: 2px solid #228B22;
+            border-radius: 8px;
+            padding: 8px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: all 0.3s;
+        }
+        
+        .audio-btn:hover {
+            background: #228B22;
+            color: white;
+        }
+        
+        .audio-btn.disabled {
+            opacity: 0.5;
+            background: rgba(255,255,255,0.5);
+        }
+        
         .start-hint {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(255,255,255,0.9);
-            padding: 20px;
+            background: rgba(255,255,255,0.95);
+            padding: 25px;
             border-radius: 15px;
             text-align: center;
             z-index: 150;
@@ -78,6 +107,14 @@
             color: #2E8B57;
             font-size: 1.1em;
             font-weight: bold;
+        }
+        
+        .audio-note {
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: #666;
+            border-top: 1px solid #ddd;
+            padding-top: 15px;
         }
         
         .game-over {
@@ -143,6 +180,11 @@
             .controls {
                 font-size: 1em;
             }
+            
+            .audio-controls {
+                right: 5px;
+                top: 5px;
+            }
         }
     </style>
 </head>
@@ -152,6 +194,12 @@
     <div class="game-container">
         <canvas id="gameCanvas" width="400" height="600"></canvas>
         
+        <div class="audio-controls">
+            <div class="audio-btn" id="musicBtn" title="背景音樂">🎵</div>
+            <div class="audio-btn" id="soundBtn" title="音效">🔊</div>
+            <div class="audio-btn" id="vibrateBtn" title="震動">📳</div>
+        </div>
+        
         <div class="score-panel">
             <div>💯 分數: <span id="score">0</span></div>
             <div>❤️ 生命: <span id="lives">3</span></div>
@@ -160,7 +208,11 @@
         
         <div class="start-hint" id="startHint">
             🎮 觸摸螢幕開始遊戲<br>
-            👆 滑動控制發射器移動
+            👆 滑動控制發射器移動<br>
+            <div class="audio-note">
+                🎵 包含背景音樂與音效<br>
+                📳 支援震動回饋
+            </div>
         </div>
         
         <div class="game-over" id="gameOver">
@@ -172,7 +224,8 @@
     </div>
     
     <div class="controls">
-        📱 用手指滑動控制發射器 • 🎯 躲避蜜蜂炸彈 • 💥 反擊得分
+        📱 用手指滑動控制發射器 • 🎯 躲避蜜蜂炸彈 • 💥 反擊得分<br>
+        🎵 音效版：背景音樂 + 射擊爆炸音效 + 增強震動
     </div>
     
     <script>
@@ -186,6 +239,13 @@
         let lives = 3;
         let kills = 0;
         let animationId;
+        
+        // 音效控制
+        let musicEnabled = true;
+        let soundEnabled = true;
+        let vibrateEnabled = true;
+        let audioContext = null;
+        let backgroundMusic = null;
         
         // 遊戲物件
         let player = {
@@ -211,6 +271,176 @@
         let lastShot = 0;
         let gameTime = 0;
         
+        // 音效系統初始化
+        function initAudioSystem() {
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                setupAudioControls();
+                createBackgroundMusic();
+            } catch (error) {
+                console.log('音效系統初始化失敗:', error);
+            }
+        }
+        
+        function setupAudioControls() {
+            const musicBtn = document.getElementById('musicBtn');
+            const soundBtn = document.getElementById('soundBtn');
+            const vibrateBtn = document.getElementById('vibrateBtn');
+            
+            musicBtn.addEventListener('click', () => {
+                musicEnabled = !musicEnabled;
+                musicBtn.classList.toggle('disabled', !musicEnabled);
+                if (musicEnabled && gameRunning) {
+                    startBackgroundMusic();
+                } else {
+                    stopBackgroundMusic();
+                }
+            });
+            
+            soundBtn.addEventListener('click', () => {
+                soundEnabled = !soundEnabled;
+                soundBtn.classList.toggle('disabled', !soundEnabled);
+                if (soundEnabled) {
+                    playSound('confirm');
+                }
+            });
+            
+            vibrateBtn.addEventListener('click', () => {
+                vibrateEnabled = !vibrateEnabled;
+                vibrateBtn.classList.toggle('disabled', !vibrateEnabled);
+                if (vibrateEnabled && navigator.vibrate) {
+                    navigator.vibrate(50);
+                }
+            });
+        }
+        
+        // 創建背景音樂（簡單的音調序列）
+        function createBackgroundMusic() {
+            if (!audioContext) return;
+            
+            const notes = [
+                { freq: 523, duration: 0.5 }, // C5
+                { freq: 659, duration: 0.5 }, // E5
+                { freq: 784, duration: 0.5 }, // G5
+                { freq: 659, duration: 0.5 }, // E5
+                { freq: 523, duration: 0.5 }, // C5
+                { freq: 440, duration: 0.5 }, // A4
+                { freq: 523, duration: 1.0 }, // C5
+                { freq: 0, duration: 0.5 }    // 休息
+            ];
+            
+            let currentNoteIndex = 0;
+            let nextNoteTime = 0;
+            
+            function scheduleNote() {
+                if (!musicEnabled || !gameRunning) return;
+                
+                const note = notes[currentNoteIndex];
+                const currentTime = audioContext.currentTime;
+                
+                if (currentTime >= nextNoteTime) {
+                    if (note.freq > 0) {
+                        playTone(note.freq, note.duration * 0.8, 0.1, 'sine');
+                    }
+                    
+                    nextNoteTime = currentTime + note.duration;
+                    currentNoteIndex = (currentNoteIndex + 1) % notes.length;
+                }
+                
+                if (gameRunning) {
+                    setTimeout(scheduleNote, 50);
+                }
+            }
+            
+            backgroundMusic = scheduleNote;
+        }
+        
+        function startBackgroundMusic() {
+            if (musicEnabled && audioContext && backgroundMusic) {
+                backgroundMusic();
+            }
+        }
+        
+        function stopBackgroundMusic() {
+            // 背景音樂會在 gameRunning = false 時自動停止
+        }
+        
+        // 播放音調
+        function playTone(frequency, duration, volume = 0.3, type = 'sine') {
+            if (!audioContext || !soundEnabled) return;
+            
+            try {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+                oscillator.type = type;
+                
+                gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+                gainNode.gain.linearRampToValueAtTime(volume, audioContext.currentTime + 0.01);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + duration);
+            } catch (error) {
+                console.log('音效播放錯誤:', error);
+            }
+        }
+        
+        // 播放不同的遊戲音效
+        function playSound(type) {
+            if (!soundEnabled) return;
+            
+            switch (type) {
+                case 'shoot':
+                    playTone(800, 0.1, 0.2, 'square');
+                    break;
+                case 'explosion':
+                    // 爆炸音效 - 噪音 + 低頻
+                    playTone(150, 0.3, 0.3, 'sawtooth');
+                    setTimeout(() => playTone(100, 0.2, 0.2, 'triangle'), 50);
+                    break;
+                case 'hit':
+                    playTone(300, 0.2, 0.4, 'square');
+                    break;
+                case 'bee':
+                    playTone(400, 0.1, 0.15, 'triangle');
+                    break;
+                case 'powerup':
+                    playTone(523, 0.15, 0.3, 'sine');
+                    setTimeout(() => playTone(659, 0.15, 0.3, 'sine'), 100);
+                    setTimeout(() => playTone(784, 0.15, 0.3, 'sine'), 200);
+                    break;
+                case 'confirm':
+                    playTone(660, 0.1, 0.2, 'sine');
+                    break;
+                case 'gameOver':
+                    playTone(220, 0.5, 0.4, 'sawtooth');
+                    setTimeout(() => playTone(196, 0.5, 0.4, 'sawtooth'), 250);
+                    setTimeout(() => playTone(165, 1.0, 0.4, 'sawtooth'), 500);
+                    break;
+            }
+        }
+        
+        // 增強震動效果
+        function vibrate(pattern) {
+            if (!vibrateEnabled || !navigator.vibrate) return;
+            
+            const patterns = {
+                'shoot': [30],
+                'hit': [100, 50, 100],
+                'explosion': [200, 100, 200, 100, 200],
+                'bee': [50, 30, 50],
+                'gameOver': [500, 200, 500, 200, 1000]
+            };
+            
+            const vibratePattern = patterns[pattern] || [50];
+            navigator.vibrate(vibratePattern);
+        }
+        
         // 初始化遊戲
         function initGame() {
             score = 0;
@@ -226,7 +456,7 @@
             lastShot = 0;
             gameStarted = false;
             updateUI();
-            draw(); // 繪製初始畫面
+            draw();
         }
         
         function updateUI() {
@@ -235,14 +465,21 @@
             document.getElementById('kills').textContent = kills;
         }
         
-        function startGame() {
+        async function startGame() {
             if (gameStarted) return;
+            
+            // 啟用音效系統
+            if (audioContext && audioContext.state === 'suspended') {
+                await audioContext.resume();
+            }
             
             gameRunning = true;
             gameStarted = true;
             document.getElementById('startHint').style.display = 'none';
             document.getElementById('gameOver').style.display = 'none';
             
+            playSound('powerup');
+            startBackgroundMusic();
             gameLoop();
         }
         
@@ -251,9 +488,7 @@
             startGame();
         }
         
-        // 觸控事件處理 - 改進版
         function setupTouchEvents() {
-            // 觸控開始
             function handleTouchStart(e) {
                 e.preventDefault();
                 if (!gameStarted) {
@@ -268,7 +503,6 @@
                 isTouch = true;
             }
             
-            // 觸控移動
             function handleTouchMove(e) {
                 e.preventDefault();
                 if (!gameRunning || !isTouch) return;
@@ -278,7 +512,6 @@
                 touchX = touch.clientX - rect.left;
             }
             
-            // 觸控結束
             function handleTouchEnd(e) {
                 e.preventDefault();
                 touchX = null;
@@ -286,7 +519,6 @@
                 isTouch = false;
             }
             
-            // 滑鼠事件（桌面測試用）
             function handleMouseDown(e) {
                 if (!gameStarted) {
                     startGame();
@@ -312,7 +544,6 @@
                 isTouch = false;
             }
             
-            // 綁定事件
             canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
             canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
             canvas.addEventListener('touchend', handleTouchEnd, { passive: false });
@@ -321,7 +552,6 @@
             canvas.addEventListener('mousemove', handleMouseMove);
             canvas.addEventListener('mouseup', handleMouseUp);
             
-            // 防止頁面滾動
             document.addEventListener('touchmove', (e) => {
                 e.preventDefault();
             }, { passive: false });
@@ -332,16 +562,15 @@
             
             if (touchX !== null && lastTouchX !== null) {
                 const moveDistance = touchX - lastTouchX;
-                player.x += moveDistance * 1.5; // 提高敏感度
+                player.x += moveDistance * 1.5;
                 lastTouchX = touchX;
             }
             
-            // 限制玩家在畫布範圍內
             player.x = Math.max(player.width / 2, Math.min(canvas.width - player.width / 2, player.x));
         }
         
         function shootBullet() {
-            if (Date.now() - lastShot > 200) { // 限制射擊頻率
+            if (Date.now() - lastShot > 200) {
                 bullets.push({
                     x: player.x,
                     y: player.y - 10,
@@ -350,6 +579,10 @@
                     speed: 8
                 });
                 lastShot = Date.now();
+                
+                // 射擊音效和震動
+                playSound('shoot');
+                vibrate('shoot');
             }
         }
         
@@ -367,6 +600,9 @@
                     health: 1
                 });
                 lastBeeSpawn = Date.now();
+                
+                // 蜜蜂出現音效
+                playSound('bee');
             }
         }
         
@@ -376,7 +612,6 @@
             for (let i = bees.length - 1; i >= 0; i--) {
                 bees[i].y += bees[i].speed;
                 
-                // 蜜蜂射擊
                 if (Date.now() - bees[i].lastShot > 1000 + Math.random() * 2000) {
                     enemyBullets.push({
                         x: bees[i].x,
@@ -388,7 +623,6 @@
                     bees[i].lastShot = Date.now();
                 }
                 
-                // 移除超出邊界的蜜蜂
                 if (bees[i].y > canvas.height) {
                     bees.splice(i, 1);
                 }
@@ -398,7 +632,6 @@
         function updateBullets() {
             if (!gameRunning) return;
             
-            // 玩家子彈
             for (let i = bullets.length - 1; i >= 0; i--) {
                 bullets[i].y -= bullets[i].speed;
                 if (bullets[i].y < 0) {
@@ -406,7 +639,6 @@
                 }
             }
             
-            // 敵人子彈
             for (let i = enemyBullets.length - 1; i >= 0; i--) {
                 enemyBullets[i].y += enemyBullets[i].speed;
                 if (enemyBullets[i].y > canvas.height) {
@@ -422,7 +654,6 @@
             for (let i = bullets.length - 1; i >= 0; i--) {
                 for (let j = bees.length - 1; j >= 0; j--) {
                     if (isColliding(bullets[i], bees[j])) {
-                        // 創建爆炸效果
                         createExplosion(bees[j].x, bees[j].y);
                         
                         bullets.splice(i, 1);
@@ -430,10 +661,9 @@
                         score += 10;
                         kills++;
                         
-                        // 震動回饋
-                        if (navigator.vibrate) {
-                            navigator.vibrate(100);
-                        }
+                        // 爆炸音效和震動
+                        playSound('explosion');
+                        vibrate('explosion');
                         
                         updateUI();
                         break;
@@ -447,10 +677,9 @@
                     enemyBullets.splice(i, 1);
                     lives--;
                     
-                    // 強震動回饋
-                    if (navigator.vibrate) {
-                        navigator.vibrate([200, 100, 200]);
-                    }
+                    // 被擊中音效和震動
+                    playSound('hit');
+                    vibrate('hit');
                     
                     updateUI();
                     
@@ -467,10 +696,9 @@
                     bees.splice(i, 1);
                     lives--;
                     
-                    // 超強震動
-                    if (navigator.vibrate) {
-                        navigator.vibrate([300, 100, 300, 100, 300]);
-                    }
+                    // 撞擊音效和震動
+                    playSound('hit');
+                    vibrate('hit');
                     
                     updateUI();
                     
@@ -515,31 +743,19 @@
         }
         
         function draw() {
-            // 清除畫布
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            // 繪製背景雲朵
             drawClouds();
             
-            // 只有遊戲開始後才繪製遊戲物件
             if (gameStarted) {
-                // 繪製玩家
                 drawPlayer();
-                
-                // 繪製子彈
                 drawBullets();
-                
-                // 繪製蜜蜂
                 drawBees();
-                
-                // 繪製敵人子彈
                 drawEnemyBullets();
             } else {
-                // 未開始時顯示玩家發射器
                 drawPlayer();
             }
             
-            // 繪製粒子效果
             drawParticles();
         }
         
@@ -558,19 +774,15 @@
         }
         
         function drawPlayer() {
-            // 繪製發射器主體
             ctx.fillStyle = '#4169E1';
             ctx.fillRect(player.x - player.width/2, player.y - player.height/2, player.width, player.height);
             
-            // 繪製發射器砲管
             ctx.fillStyle = '#191970';
             ctx.fillRect(player.x - 3, player.y - player.height/2 - 10, 6, 15);
             
-            // 繪製發射器裝飾
             ctx.fillStyle = '#FFD700';
             ctx.fillRect(player.x - player.width/2 + 5, player.y - 5, player.width - 10, 5);
             
-            // 自動射擊（僅遊戲運行時）
             if (gameRunning) {
                 shootBullet();
             }
@@ -580,8 +792,6 @@
             ctx.fillStyle = '#FFD700';
             bullets.forEach(bullet => {
                 ctx.fillRect(bullet.x - bullet.width/2, bullet.y, bullet.width, bullet.height);
-                
-                // 子彈光效
                 ctx.shadowColor = '#FFD700';
                 ctx.shadowBlur = 5;
                 ctx.fillRect(bullet.x - bullet.width/2, bullet.y, bullet.width, bullet.height);
@@ -591,19 +801,16 @@
         
         function drawBees() {
             bees.forEach(bee => {
-                // 蜜蜂身體
                 ctx.fillStyle = '#FFD700';
                 ctx.beginPath();
                 ctx.ellipse(bee.x, bee.y, bee.width/2, bee.height/2, 0, 0, Math.PI * 2);
                 ctx.fill();
                 
-                // 蜜蜂條紋
                 ctx.fillStyle = '#000000';
                 for (let i = 0; i < 3; i++) {
                     ctx.fillRect(bee.x - bee.width/2 + i * 8, bee.y - 3, 3, 6);
                 }
                 
-                // 蜜蜂翅膀（動畫）
                 ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
                 const wingOffset = Math.sin(gameTime * 0.5) * 3;
                 ctx.beginPath();
@@ -619,8 +826,6 @@
                 ctx.beginPath();
                 ctx.arc(bullet.x, bullet.y, bullet.width/2, 0, Math.PI * 2);
                 ctx.fill();
-                
-                // 敵人子彈光效
                 ctx.shadowColor = '#DC143C';
                 ctx.shadowBlur = 3;
                 ctx.fill();
@@ -642,6 +847,11 @@
         function endGame() {
             gameRunning = false;
             gameStarted = false;
+            
+            // 遊戲結束音效和震動
+            playSound('gameOver');
+            vibrate('gameOver');
+            
             document.getElementById('finalScore').textContent = score;
             document.getElementById('finalKills').textContent = kills;
             document.getElementById('gameOver').style.display = 'block';
@@ -669,6 +879,7 @@
         
         // 初始化
         window.addEventListener('load', () => {
+            initAudioSystem();
             setupTouchEvents();
             initGame();
         });

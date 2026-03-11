@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2028 全球智識危機 — 繁體中文譯版</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Noto Serif TC", "Georgia", serif;
+    background: #fafaf8;
+    color: #1a1a1a;
+    line-height: 1.85;
+  }
+  .source-banner {
+    background: #1a1a1a;
+    color: #fff;
+    text-align: center;
+    padding: 10px 20px;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    font-family: sans-serif;
+  }
+  .source-banner a { color: #adf; text-decoration: none; }
+  .source-banner a:hover { text-decoration: underline; }
+
+  .header {
+    background: #fff;
+    border-bottom: 2px solid #000;
+    padding: 40px 20px 30px;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .header .pub-name {
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: sans-serif;
+    color: #555;
+    margin-bottom: 20px;
+  }
+  .header h1 {
+    font-size: clamp(26px, 5vw, 44px);
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    margin-bottom: 14px;
+  }
+  .header .subtitle {
+    font-size: 18px;
+    color: #555;
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+  .header .meta {
+    font-size: 13px;
+    font-family: sans-serif;
+    color: #888;
+  }
+  .header .meta span { margin: 0 8px; }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  .cover-img {
+    width: 100%;
+    max-width: 500px;
+    display: block;
+    margin: 30px auto;
+    border-radius: 4px;
+  }
+  .body-img {
+    width: 100%;
+    max-width: 700px;
+    display: block;
+    margin: 28px auto;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+  }
+
+  .section-divider {
+    border: none;
+    border-top: 2px solid #000;
+    margin: 40px 0;
+  }
+  h2 {
+    font-size: clamp(20px, 3.5vw, 28px);
+    font-weight: 800;
+    margin: 40px 0 16px;
+    line-height: 1.25;
+  }
+  h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 30px 0 12px;
+  }
+  p {
+    margin-bottom: 18px;
+    font-size: 17px;
+  }
+  em { font-style: italic; }
+  strong { font-weight: 700; }
+  s { text-decoration: line-through; }
+
+  blockquote {
+    border-left: 3px solid #000;
+    margin: 28px 0;
+    padding: 14px 20px;
+    background: #f4f4f2;
+    font-style: italic;
+    font-size: 15px;
+    color: #333;
+    line-height: 1.7;
+  }
+  blockquote strong { font-size: 13px; font-style: normal; }
+
+  .preface-box {
+    background: #f9f9f7;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 24px 28px;
+    margin-bottom: 32px;
+    font-size: 16px;
+  }
+  .preface-box p { font-style: italic; margin-bottom: 12px; }
+  .preface-box p:last-child { margin-bottom: 0; }
+
+  .note-box {
+    background: #fffbf0;
+    border: 1px solid #e8d87a;
+    border-radius: 6px;
+    padding: 18px 22px;
+    margin: 32px 0;
+    font-size: 15px;
+    color: #555;
+    font-style: italic;
+    line-height: 1.7;
+  }
+
+  .cta-end {
+    background: #1a1a1a;
+    color: #fff;
+    text-align: center;
+    padding: 32px 24px;
+    border-radius: 6px;
+    margin-top: 48px;
+    font-family: sans-serif;
+  }
+  .cta-end p { font-size: 15px; color: #ccc; margin-bottom: 14px; }
+  .cta-end a {
+    display: inline-block;
+    background: #fff;
+    color: #000;
+    padding: 10px 24px;
+    border-radius: 4px;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 15px;
+  }
+  .cta-end a:hover { background: #eee; }
+
+  .source-footer {
+    text-align: center;
+    padding: 30px 20px;
+    font-family: sans-serif;
+    font-size: 13px;
+    color: #888;
+    border-top: 1px solid #ddd;
+    margin-top: 20px;
+  }
+  .source-footer a { color: #555; }
+
+  @media (max-width: 600px) {
+    p { font-size: 16px; }
+    blockquote { font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="source-banner">
+  📌 本文為繁體中文翻譯版，原文出處：
+  <a href="https://www.citriniresearch.com/p/2028gic" target="_blank">
+    Citrini Research — THE 2028 GLOBAL INTELLIGENCE CRISIS
+  </a>
+  &nbsp;｜&nbsp; 作者：Citrini &amp; Alap Shah &nbsp;｜&nbsp; 原文發布日期：2026年2月22日
+</div>
+
+<div class="header">
+  <div class="pub-name">Citrini Research · 宏觀備忘錄</div>
+  <h1>2028 全球智識危機</h1>
+  <p class="subtitle">一場來自未來的金融歷史思想實驗</p>
+  <div class="meta">
+    <span>作者：Citrini &amp; Alap Shah</span>
+    <span>·</span>
+    <span>原文發表：2026年2月22日</span>
+    <span>·</span>
+    <span>繁中翻譯：Javis AI</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Cover Image -->
+  <img class="cover-img"
+    src="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9ede0b37-f3be-4787-90ff-10cb24719fdc_710x1119.jpeg"
+    alt="2028年全球智識危機封面圖">
+
+  <!-- Preface -->
+  <div class="preface-box">
+    <p><strong>前言</strong></p>
+    <p>如果我們對 AI 的看好持續被驗證……而那其實反而是個利空訊號，會怎樣？</p>
+    <p><strong>以下是一個情境模擬，而非預測。</strong>這不是做空 AI 的恐嚇文，也不是末日論粉絲小說。本文唯一的目的，是建構一個相對鮮少被探討的情境。我們的朋友 Alap Shah 提出了這個問題，我們共同腦力激盪出了答案。這一部分由我們 CitriniResearch 撰寫，他另外寫了兩篇，可以在<a href="https://open.substack.com/pub/alapshah1/p/the-global-intelligence-crisis" target="_blank">這裡</a>找到。</p>
+    <p>希望閱讀此文能讓你對 AI 驅動經濟日趨奇異化下的潛在尾端風險，有更多準備。</p>
+    <p><strong>這是 CitriniResearch 2028年6月的宏觀備忘錄，詳述全球智識危機的演進與後果。</strong></p>
+  </div>
+
+  <hr class="section-divider">
+
+  <h2>宏觀備忘錄：豐盛智識的代價</h2>
+  <p><em><strong>CitriniResearch</strong></em></p>
+  <p><em><strong><s>2026年2月22日</s> 2028年6月30日</strong></em></p>
+
+  <p>今早失業率公布為10.2%，超出預期0.3個百分點。市場因此下跌2%，S&amp;P 500自2026年10月高點以來的累積跌幅已擴大至38%。</p>
+
+  <p>交易員已經麻木了。六個月前，這樣的數字會觸發熔斷機制。</p>
+
+  <p><em><strong>兩年。</strong></em>從「局部性」、「特定行業」，到整個經濟面貌大變，只花了兩年。本季的宏觀備忘錄，我們試圖重建這個序列——對危機前經濟的一次事後剖析。</p>
+
+  <p>當時的狂喜幾乎觸手可及。2026年10月，S&amp;P 500逼近8000點，納斯達克突破30,000點。2026年初，第一波人工智慧引發的裁員開始，而裁員做了它本該做的事：利潤率擴張、盈利超預期、股票上漲。創紀錄的企業利潤源源不斷地再投入AI算力。</p>
+
+  <p>表面數字仍然亮眼。名義GDP屢次創出年化中至高個位數增長。生產力飛速提升。每工時實際產出的增速，達到1950年代以來未見的水準——由不需要睡眠、不請病假、也不需要健保的AI代理人驅動。</p>
+
+  <p>算力擁有者的財富隨著勞動成本消失而爆炸性增長。與此同時，實際薪資成長崩潰。儘管政府反覆吹噓創紀錄的生產力，白領工人卻被機器奪走工作，被迫進入薪酬更低的崗位。</p>
+
+  <p>當消費經濟開始出現裂縫，經濟評論員流行起一個詞：<em>「幽靈GDP」（Ghost GDP）</em>——出現在國民帳戶上、但永遠不會在實體經濟中流通的產出。</p>
+
+  <p><em>AI 的每項表現都超出預期，而市場就是 AI。唯一的問題……<strong>經濟並非如此。</strong></em></p>
+
+  <p>其實從一開始就應該清楚：北達科他州一個 GPU 叢集產生了原本10,000名曼哈頓白領的產出，更像一場經濟瘟疫，而非經濟靈藥。貨幣流通速度趨於平坦。佔GDP 70%的人本位消費經濟萎縮凋零。我們本來可以更早看清——只要問問機器在可選消費品上花了多少錢就好了。（提示：零。）</p>
+
+  <p>AI能力提升 → 公司需要更少員工 → 白領裁員增加 → 被裁員工支出減少 → 利潤壓力迫使企業加大AI投資 → AI能力進一步提升……</p>
+
+  <p>這是一個沒有天然剎車的負向回饋迴圈，即<em>人類智識替代螺旋</em>。白領工人的薪資能力（及其理性的消費決策）遭到結構性傷害。他們的收入曾是13兆美元房貸市場的基石——迫使承保機構重新評估：優質房貸是否仍然有保障？</p>
+
+  <p>長達17年沒有真實違約週期，讓私募信貸市場充斥著 PE 支持的軟體交易，這些交易的假設是 ARR 將永遠「循環出現」。2027年中首波因 AI 破壞引發的違約動搖了這個假設。</p>
+
+  <p>如果破壞只停留在軟體行業，這本來還算可控；但事實並非如此。到2027年底，它威脅到所有建立在「為人類提供中介服務」基礎上的商業模式。一大批以從人類身上「賺取摩擦費用」為商業模式的公司，土崩瓦解。</p>
+
+  <p>整個體系原來只是一條環環相扣的「白領生產力增長相關賭注鍊條」。2027年11月的崩盤，只是加速了所有早已運行中的負向回饋迴圈。</p>
+
+  <p>我們已等了將近一年，盼望「壞消息即好消息」的轉折出現。政府開始考慮一些提案，但公眾對政府能夠展開任何形式救援的信心，已所剩無幾。政策回應歷來落後於經濟現實，而缺乏全面計劃，現在正威脅著加速通縮螺旋。</p>
+
+  <hr class="section-divider">
+
+  <h2>起點</h2>
+
+  <p>2025年底，代理式編程工具的能力出現了躍升式進步。</p>
+
+  <p>一位能力合格的開發人員，現在可以與 Claude Code 或 Codex 合作，在數週內複製一個中端 SaaS 產品的核心功能。並不完美、也未能處理每個邊緣情況，但已足以讓正在審查50萬美元年費合約的 CIO 開始問：「如果我們自己開發呢？」</p>
+
+  <p>大多數財政年度與日曆年度吻合，因此2026年企業支出早在2025年第四季就已確定——當時「代理式AI」還只是一個流行詞。年中複審，是採購團隊第一次帶著對這些系統實際能力的清晰認知做決策。有些公司親眼目睹內部團隊在數週內開發出原型，複製了六位數合約的功能。</p>
+
+  <p>那個夏天，我們與一家財富500強企業的採購經理交流。他描述了一次預算談判：業務員預計照例執行老套路——每年漲價5%、「貴公司團隊依賴我們」的慣常說詞。這位採購經理告訴他，自己一直在與 OpenAI 洽談，讓他們的「前沿部署工程師」用 AI 工具完全取代該供應商。最終以打九折七更新合約。「這算是不錯的結果，」他說。那些SaaS長尾企業，例如 Monday.com、Zapier 和 Asana，處境則悽慘得多。</p>
+
+  <p>投資者早有準備——甚至是預期——長尾市場會受到重創。它們也許佔了典型企業技術棧三分之一的支出，但顯然是易受衝擊的。然而，那些「記錄型系統」本應不受破壞。</p>
+
+  <p>直到 ServiceNow 公布2026年第三季報告，反身性的機制才變得清晰起來。</p>
+
+  <blockquote>
+    <strong>SERVICENOW 新增年度合約價值增速減至14%（前值23%）；宣布裁員15%並啟動「結構效率計劃」；股價下跌18% | 彭博社，2026年10月</strong>
+  </blockquote>
+
+  <p>SaaS並未「死亡」。維護和支援內部開發仍存在成本效益考量。但自建確實成了一個選項，這影響了定價談判。更重要的是，競爭格局已發生改變。AI降低了開發和推出新功能的門檻，差異化崩潰。現有廠商陷入相互殺價——與彼此廝殺，也與大批新興挑戰者廝殺。這些新玩家被代理式編程能力躍升所鼓舞，沒有任何舊有成本結構需要保護，正大舉搶佔市場份額。</p>
+
+  <p>這次財報也讓人們首次充分意識到這些系統的相互依存性。ServiceNow 靠席位收費。當財富500強客戶裁員15%，他們就取消了15%的授權。那些提升客戶利潤率的AI驅動裁員，正在機械性地摧毀 ServiceNow 自己的收入基礎。</p>
+
+  <p>這家出售工作流自動化的公司，正被更優秀的工作流自動化所顛覆，而它的回應是裁員，並用省下的錢資助那個正在顛覆自身的技術。</p>
+
+  <p><em>否則它們該怎麼辦？原地等死？<strong>受AI威脅最深的公司，成了AI最積極的採用者。</strong></em></p>
+
+  <img class="body-img"
+    src="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F70ccc118-1388-4602-a5bd-bbc4284208f6_1024x541.png"
+    alt="市場趨勢圖表">
+
+  <p>軟體只是開場序曲。當投資者還在爭論 SaaS 估值是否已見底時，反身性迴圈早已逸出軟體行業。讓 ServiceNow 裁員有充分理由的同一邏輯，適用於每一家有白領成本結構的公司。</p>
+
+  <hr class="section-divider">
+
+  <h2>當摩擦歸零</h2>
+
+  <p>到2027年初，LLM已成為默認選項。人們在使用AI代理時，甚至不知道「AI代理」是什麼——就像從未學過「雲端計算」的人使用串流服務一樣。他們把它視為手機自動補全或拼字檢查——一個裝置默默為你做的事情。</p>
+
+  <p>Qwen 的開源代理購物工具，成為AI接管消費者決策的催化劑。數週內，每個主要AI助理都整合了某種形式的代理商務功能。蒸餾模型讓這些代理可以在手機和筆電上運行，而非只在雲端實例，大幅降低了推論的邊際成本。</p>
+
+  <p>本應讓投資者更警惕的是：這些代理不等待被詢問。它們根據用戶偏好在後台持續運行。商業活動不再是一系列離散的人類決策，而成為一個代表每個聯網消費者全天候運行的持續優化過程。到2027年3月，美國每個人每天平均消費40萬個 token——是2026年底的10倍。</p>
+
+  <p>鏈條中的下一個環節已在斷裂。</p>
+
+  <p><strong>中介化。</strong></p>
+
+  <p>過去五十年，美國經濟在人類局限性之上建立了一個巨大的租金抽取層：事情需要時間，耐心會耗盡，品牌熟悉度替代了盡職調查，而大多數人都願意接受一個壞價格，以避免更多點擊。數兆美元的企業價值，都依賴於這些約束的持久存在。</p>
+
+  <p>代理人去除了摩擦。</p>
+
+  <p>即使停用數月仍在默默扣費的訂閱與會員制。試用期後悄悄翻倍的優惠定價。每一項都被重新定位為代理人可以談判的「人質局面」。整個訂閱經濟賴以建立的核心指標——客戶終身價值——顯著下滑。</p>
+
+  <p>消費者代理開始改變幾乎所有消費者交易的運作方式。</p>
+
+  <p>人類確實沒有時間在購買一盒蛋白質棒前，比較五個競爭平台的價格。機器有。</p>
+
+  <p>旅遊預訂平台是最早的受害者，因為它們最為簡單。到2026年第四季，我們的代理已能以更快更低廉的方式，組合一個完整的行程（機票、酒店、地面交通、積分優化、預算限制、退款）。</p>
+
+  <p>保險續保——整個續保模式依賴投保人的惰性——被改革了。每年幫你重新比較保障的代理，拆解了保險公司從被動續保中賺取的15-20%保費利潤。</p>
+
+  <p>財務顧問、報稅、日常法律工作。任何服務提供者的價值主張本質上是「我替你處理你覺得枯燥的繁瑣事」的行業，都被顛覆——因為代理人什麼都不覺得枯燥。</p>
+
+  <p>就連我們以為因人情關係而有保護的地方，也被證明是脆弱的。房地產行業，買家數十年來容忍5-6%佣金，因為代理與消費者之間存在資訊不對稱；一旦配備 MLS 資料庫和數十年交易數據的AI代理能夠即時複製知識庫，這道壁壘就崩潰了。2027年3月的一份賣方報告將此稱為「代理人對代理人的暴力」。主要都會區買方傭金從2.5-3%壓縮至1%以下，且越來越多的交易在沒有任何人類買方代理的情況下成交。</p>
+
+  <p>我們高估了「人情關係」的價值。事實證明，許多人所稱的「關係」，不過是帶著友善臉孔的摩擦。</p>
+
+  <p>DoorDash 是最具代表性的受害者。</p>
+
+  <p>代理式編程工具已使外送應用的進入門檻崩潰。一名稱職的開發者可以在數週內部署一個功能性競爭對手，而且有數十名開發者這樣做了——通過將90-95%的外送費返還給司機，將他們從 DoorDash 和 Uber Eats 那裡挖走。多應用控制板讓外送員能同時追蹤二、三十個平台的訂單，消除了現有廠商賴以依存的鎖定效應。市場一夜之間碎片化，利潤率幾乎壓縮至零。</p>
+
+  <p>代理人加速了破壞的兩端。它們催生了競爭者，然後又成為競爭者的用戶。DoorDash 的護城河本質上是「你餓了，你懶了，這是你桌面上的那個App」。代理人沒有桌面。它每次都去比較 DoorDash、Uber Eats、餐廳自家網站，以及二十個新的「振動式編碼」替代平台，挑選費用最低、配送最快的選項。</p>
+
+  <p>習慣性應用忠誠度，整個商業模式的全部基礎，對機器而言根本不存在。</p>
+
+  <hr class="section-divider">
+
+  <h2>從行業風險到系統性風險</h2>
+
+  <p>整個2026年，市場將AI的負面影響視為行業問題。軟體和諮詢業遭受重創，支付和其他「收費站」在搖晃，但更廣泛的經濟似乎完好無損。勞動力市場雖在軟化，但尚未自由落體。主流觀點認為，創造性破壞是任何技術創新週期的一部分，在某些地方會痛，但AI的整體淨收益將超過任何負面影響。</p>
+
+  <p>我們在2027年1月的宏觀備忘錄中指出，這是錯誤的思維框架。美國經濟是一個白領服務業經濟。白領工人佔就業人數的50%，驅動了約75%的可選消費性支出。AI 正在蠶食的業務和工作，並非美國經濟的邊緣——它們<em>就是</em>美國經濟。</p>
+
+  <img class="body-img"
+    src="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0bc01ebb-a883-4e5c-bd2b-fa7aaa872edb_1600x1059.png"
+    alt="AI能力曲線示意圖">
+
+  <p>「技術創新會摧毀工作崗位，然後創造更多工作崗位。」這在當時是最流行也最令人信服的反駁論點。之所以流行且令人信服，是因為它已被兩個世紀的歷史所驗證。</p>
+
+  <p>然而每一個新工作崗位，都需要人類來執行。</p>
+
+  <p>AI 現在是一種通用智識，並在人類本可轉型的任務上持續改進。被取代的程序員不能簡單地轉移到「AI管理」崗位，因為AI已有能力勝任這項工作。</p>
+
+  <blockquote>
+    <strong>美國 JOLTS：職位空缺降至550萬以下；失業與空缺比率攀升至約1.7，為2020年8月以來最高 | 彭博社，2026年10月</strong>
+  </blockquote>
+
+  <p>2027年，宏觀故事停止微妙了。過去十二個月零散但明顯負面發展的傳導機制，變得顯而易見。你不必深入BLS數據。只需參加一次老友的聚餐。</p>
+
+  <p>印度是反向案例。該國IT服務行業每年出口逾2000億美元，是印度經常帳盈餘的最大單一貢獻來源，也是抵銷其持續貨物貿易逆差的支柱。整個模式建立在一個價值主張上：印度開發者的成本是美國同行的幾分之一。但AI編程代理的邊際成本，已經崩潰至實際上等於電費的水準。TCS、Infosys 和 Wipro 在2027年全年加速出現合同取消。印度盧比在四個月內兌美元貶值18%，因為錨定印度對外帳戶的服務業盈餘蒸發。到2028年第一季，IMF已開始與新德里進行「初步討論」。</p>
+
+  <hr class="section-divider">
+
+  <h2>智識替代螺旋</h2>
+
+  <p>2027年是宏觀故事不再微妙的一年。你不必深入BLS數據，只需參加一次朋友聚餐。</p>
+
+  <p><strong>被取代的白領工人沒有閒著。</strong>他們下調了生活預期。許多人轉入薪酬較低的服務業和零工經濟工作，增加了這些行業的勞動力供給，進一步壓低那裡的薪資。</p>
+
+  <p>我們一位朋友在2025年是 Salesforce 的高級產品經理。頭銜、健保、401k，年薪18萬美元。她在第三輪裁員中失去工作。找了六個月工作後，她開始為 Uber 開車。收入降至4萬5千美元。重點不是個人故事本身，而是二階數學後果——把這個動態乘以每個大城市數十萬工人。大量過度勝任的勞動力湧入服務業和零工經濟，壓低了原本就已掙扎中的現有工人薪資。特定行業的破壞轉移成了全經濟範圍的薪資壓縮。</p>
+
+  <img class="body-img"
+    src="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8f6a0cb1-86ff-4b99-811c-1652d5577fba_1024x541.jpeg"
+    alt="薪資與就業趨勢圖">
+
+  <blockquote>
+    <strong>美國首次申請失業救濟人數激增至487,000，為2020年4月以來最高；美國勞工部，2027年第三季</strong>
+  </blockquote>
+
+  <p>首次申請失業救濟人數激增至487,000，為2020年4月以來最高。ADP和Equifax確認，新申請人的壓倒性多數來自白領專業人員。</p>
+
+  <p>S&amp;P在隨後一週下跌6%。負面宏觀開始在拔河中佔據上風。</p>
+
+  <p>在正常衰退中，工作損失是廣泛分布的。藍領和白領工人大致按照各自在就業中的比例分擔痛苦。此次週期的工作損失集中在收入分布的頂端十分位。他們佔總就業的比例相對較小，但驅動了消費者支出的極不相稱份額。美國前10%的收入者佔所有消費者支出的50%以上；前20%佔約65%。這些人購買房屋、汽車、假期、餐廳、私立學校學費、裝修。他們是整個可選消費經濟的需求基礎。</p>
+
+  <p>當這些工人失去工作，或薪酬腰斬後轉入其他可用崗位，對消費支出的衝擊，相對於失去的工作數量而言是巨大的。白領就業下降2%，約轉化為可選消費支出下降3-4%。</p>
+
+  <p>到2027年第二季，經濟陷入衰退。NBER 直到數月後才正式確認衰退起始點（他們從來如此），但數據毫不含糊——我們已連續兩個季度出現實際GDP負增長。但這還不是「金融危機」……尚且如此。</p>
+
+  <hr class="section-divider">
+
+  <h2>相關賭注的骨牌鏈</h2>
+
+  <p>私募信貸從2015年的不足1兆美元，增長到2026年的逾2.5兆美元。相當大一部分資本被部署到軟體和科技交易中，其中許多是以「ARR 永遠循環出現」為假設的 SaaS 公司槓桿收購。</p>
+
+  <p>那些假設在第一次代理式編程演示和2026年第一季軟體崩潰之間的某個時刻死去了，但帳面資產似乎沒有意識到自己已死。</p>
+
+  <blockquote>
+    <strong>穆迪下調14家發行人共180億美元 PE 支持的軟體債務評級，理由為「AI驅動競爭破壞帶來的長期收入逆風」；為2015年能源行業以來最大單一行業行動 | 穆迪投資者服務，2027年4月</strong>
+  </blockquote>
+
+  <p>Zendesk 是最具代表性的導火索。</p>
+
+  <blockquote>
+    <strong>ZENDESK 因 AI 驅動客服自動化侵蝕 ARR 而違反債務契約條款；50億美元直接借貸融資帳面值標記至58分；創私募信貸軟體違約最大紀錄 | 金融時報，2027年9月</strong>
+  </blockquote>
+
+  <p>2022年，Hellman &amp; Friedman 和 Permira 以102億美元將 Zendesk 私有化。債務包是50億美元的直接借貸，由黑石牽頭，Apollo、Blue Owl 和 HPS 均在貸款人之列。這筆貸款明確以 Zendesk 的年度循環收入將繼續循環為假設。</p>
+
+  <p>到2027年中，情況已不然。AI代理在大半年的時間裡一直在自主處理客服工作。Zendesk 所定義的品類——票務、路由、管理人工支援互動——已被完全不生成工單就能解決問題的系統所取代。這筆貸款所依據的年度循環收入，已不再循環，只是還沒離開的收入。</p>
+
+  <p>歷史上最大的ARR支持貸款，成為歷史上最大的私募信貸軟體違約。每個信用台同時問出同一個問題：還有誰把長期逆風偽裝成週期性逆風？</p>
+
+  <img class="body-img"
+    src="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4c777d0f-75a4-4e42-909d-812165aa351d_1077x702.jpeg"
+    alt="私募信貸結構示意圖">
+
+  <p>過去十年，大型另類資產管理公司收購壽險公司，將其轉化為融資載體。Apollo 收購 Athene。Brookfield 收購 American Equity。KKR 收購 Global Atlantic。邏輯優雅：年金存款提供了穩定的長期負債基礎。管理人將這些存款投入他們自己發起的私募信貸，並獲得雙重報酬——在保險端賺取利差，在資產管理端賺取管理費。這台費中費的永動機在一個條件下運轉完美：<em>私募信貸必須真的有保障。</em></p>
+
+  <p>2027年11月的崩盤，標誌著市場認知從一場潛在的普通週期性回調，轉向更令人不安的某種事物。聯準會主席 Kevin Warsh 在FOMC緊急11月會議上，稱其為<em>「一條白領生產力增長的相關賭注鍊條」</em>。</p>
+
+  <p>危機從來不是損失本身造成的，而是對損失的認識。而還有一個更大、更重要的金融領域，我們已開始對那種認識感到恐懼。</p>
+
+  <h3>房貸問題</h3>
+
+  <blockquote>
+    <strong>ZILLOW 房屋價值指數年增率在舊金山下跌11%、西雅圖9%、奧斯汀8%；房利美標記科技/金融就業比例逾40%的郵遞區號出現「早期逾期率上升」 | Zillow / 房利美，2028年6月</strong>
+  </blockquote>
+
+  <p>美國住宅房貸市場約13兆美元。房貸承保建立在一個根本假設上：借款人在貸款期間將大致保持目前的就業和收入水準——以大多數房貸而言，長達三十年。</p>
+
+  <p>白領就業危機，以持續性的收入預期轉變威脅著這個假設。我們現在必須問一個三年前看來荒謬的問題——<em>優質房貸是否仍有保障？</em></p>
+
+  <p>2028年的借款人並非次貸。他們有780的FICO信用評分。他們付了20%的頭期款。他們有乾淨的信用記錄、穩定的就業記錄，以及在申請時已核實記錄的收入。他們是金融體系所有風險模型都視為信用質量基石的借款人。</p>
+
+  <p>2008年，貸款一開始就是壞的。2028年，貸款一開始是好的。只是世界……在貸款寫出之後發生了改變。人們是借著對一個他們如今已無力相信的未來來借貸的。</p>
+
+  <img class="body-img"
+    src="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2087b521-70e2-4069-8390-c8f0dbd53e9f_1024x559.png"
+    alt="房貸逾期率趨勢圖">
+
+  <img class="body-img"
+    src="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4fa31f0b-2188-4936-9ebb-88ccf78d51ff_1598x810.png"
+    alt="房價下跌地圖">
+
+  <hr class="section-divider">
+
+  <h2>與時間賽跑</h2>
+
+  <p>第一個負向回饋迴圈在實體經濟：AI能力提升，工資單縮水，支出下滑，利潤收緊，公司購入更多算力，算力提升。然後它轉向金融：收入受損衝擊房貸，銀行虧損收緊信貸，財富效應崩裂，回饋迴圈加速。兩者都因為政府應對不足而雪上加霜——坦白說，政府顯得相當困惑。</p>
+
+  <img class="body-img"
+    src="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F5e7b551a-0d98-4485-a4fd-d7825349bac3_1024x559.png"
+    alt="政策回應時間軸">
+
+  <p>這個體系的設計初衷不是為了應對這樣的危機。聯邦政府的稅收基礎，本質上是對人類時間的徵稅。人們工作，公司支付薪資，政府抽取一份。個人所得稅和薪資稅，在正常年份是稅收的支柱。</p>
+
+  <p>截至今年第一季，聯邦收入比 CBO 基線預測低12%。薪資收入在下降，因為以往薪酬水準就業的人更少了。所得稅在下降，因為賺取的收入在結構上更低了。生產力在飆升，但收益流向了資本和算力，而非勞動力。</p>
+
+  <p>勞動力佔GDP的份額從1974年的64%降至2024年的56%，這是全球化、自動化和工人議價能力持續侵蝕驅動的四十年緩慢下滑。在AI開始指數式改進以來的四年裡，這一比例降至46%——創有記錄以來最大跌幅。</p>
+
+  <img class="body-img"
+    src="https://substackcdn.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F29c19580-7ac9-4287-aea8-a8341f320152_1600x762.png"
+    alt="勞動力佔GDP份額圖表">
+
+  <p>產出仍在那裡，但它不再透過家庭流回企業的途中流經各處，這意味著它也不再流經美國國稅局了。循環流量正在斷裂，而政府被期望出面修復。</p>
+
+  <p>政府需要在它從勞動力徵收更少稅款的時刻，向家庭轉移更多資金。</p>
+
+  <p>政府最終提出了「過渡經濟法案」：一個向被取代工人提供直接轉移支付的框架，由赤字支出和擬議的AI推論算力稅共同資助。桌面上最激進的提案走得更遠：「共享AI繁榮法案」將對智識基礎設施的回報建立公共主張——類似主權財富基金和AI生成產出的版稅，並以股息資助家庭轉移支付。</p>
+
+  <p>政治上的討論走向是可悲的可預測，被表演性姿態和邊緣攤牌所惡化。右翼稱轉移支付和再分配為馬克思主義，警告對算力徵稅將把領導地位拱手讓給中國。左翼警告由現有廠商協助起草的稅收將成為監管俘獲。財政鷹派指出不可持續的赤字。鴿派援引全球金融危機後過早緊縮作為警示。裂痕在今年總統大選前夕只是進一步擴大。</p>
+
+  <p>政客爭吵之際，社會結構的撕裂速度已超過立法進程所能跟上的速度。</p>
+
+  <hr class="section-divider">
+
+  <h2>智識溢價的解體</h2>
+
+  <p>縱觀整個現代經濟史，人類智識一直是稀缺投入要素。資本雖豐沛（或至少可複製）；自然資源有限但可替代；技術進步緩慢得足以讓人類適應。而智識——分析、決策、創造、說服和協調的能力——是無法規模化複製的東西。</p>
+
+  <p>人類智識的內在溢價來自其稀缺性。我們經濟中的每一個機構，從勞動力市場到房貸市場再到稅法，都是為一個這一假設成立的世界而設計的。</p>
+
+  <p>我們現在正在經歷這種溢價的解體。機器智識現在是人類智識在越來越廣泛任務中，一個稱職且快速改進的替代品。為一個人類智識稀缺的世界優化了數十年的金融體系，正在重新定價。這種重新定價是痛苦的、混亂的，且遠未完成。</p>
+
+  <p>但重新定價不等於崩潰。</p>
+
+  <p>經濟可以找到新的均衡。到達那裡是僅剩的少數幾項只有人類才能完成的任務之一。我們需要正確地完成它。</p>
+
+  <p>這是歷史上第一次，經濟中最具生產力的資產創造了更少而非更多的工作崗位。沒有任何人的框架適用，因為沒有任何框架是為稀缺投入變得豐沛的世界設計的。所以我們必須建立新框架。<strong>我們是否能及時建立，是唯一重要的問題。</strong></p>
+
+  <div class="note-box">
+    <p><em>但你讀到這篇文章的時間，並不是2028年6月。你在2026年2月讀到它。</em></p>
+    <p><em>S&amp;P 500 接近歷史高點。負向回饋迴圈尚未開始。我們確信其中一些情境不會實現。我們同樣確信機器智識將持續加速。人類智識的溢價將收窄。</em></p>
+    <p><em>作為投資者，我們仍有時間評估我們的投資組合有多少建立在十年後將不復存在的假設上。作為一個社會，我們仍有時間主動出擊。</em></p>
+    <p><em><strong>金絲雀仍然活著。</strong></em></p>
+  </div>
+
+  <hr class="section-divider">
+
+  <p style="font-size:15px; color:#555;">
+    <strong>致謝：</strong>感謝 Hunterbrook 的 Sam Koppelman 協助校對。本文的共同作者 Alap Shah（LOTUS）提出了此文的構想——CitriniResearch 撰寫了這部分，但他撰寫了系列中的其他兩篇「智識爆炸」文章，強烈推薦閱讀。可在
+    <a href="https://open.substack.com/pub/alapshah1/p/the-global-intelligence-crisis" target="_blank">這裡</a>找到。
+  </p>
+
+  <div class="cta-end">
+    <p>閱讀 Citrini Research 原文及更多深度分析</p>
+    <a href="https://www.citriniresearch.com/p/2028gic" target="_blank">前往原文 →</a>
+  </div>
+
+</div>
+
+<div class="source-footer">
+  <strong>原文出處</strong>：
+  <a href="https://www.citriniresearch.com/p/2028gic" target="_blank">
+    Citrini Research — THE 2028 GLOBAL INTELLIGENCE CRISIS
+  </a><br>
+  作者：Citrini &amp; Alap Shah &nbsp;｜&nbsp; 原文發表：2026年2月22日<br>
+  繁體中文翻譯由 Javis AI 自動產生，僅供閱讀參考，版權歸原作者所有。
+</div>
+
+</body>
+</html>

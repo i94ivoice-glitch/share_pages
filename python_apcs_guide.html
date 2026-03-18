@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python 解題思路引導 — APCS 2025年6月</title>
+<style>
+  :root {
+    --primary: #4f46e5;
+    --primary-light: #e0e7ff;
+    --success: #059669;
+    --success-light: #d1fae5;
+    --warning: #d97706;
+    --warning-light: #fef3c7;
+    --danger: #dc2626;
+    --code-bg: #1e1e2e;
+    --code-text: #cdd6f4;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    line-height: 1.7;
+  }
+  header {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: white;
+    padding: 2rem 1.5rem;
+    text-align: center;
+  }
+  header h1 { font-size: 1.8rem; margin-bottom: 0.4rem; }
+  header p { opacity: 0.85; font-size: 0.95rem; }
+
+  /* Tab navigation */
+  .tab-nav {
+    display: flex;
+    background: white;
+    border-bottom: 2px solid #e2e8f0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 1rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #64748b;
+    transition: all 0.2s;
+    border-bottom: 3px solid transparent;
+  }
+  .tab-btn.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+    background: var(--primary-light);
+  }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* Main layout */
+  .container { max-width: 860px; margin: 0 auto; padding: 2rem 1.2rem; }
+
+  /* Problem box */
+  .problem-box {
+    background: white;
+    border-left: 4px solid var(--primary);
+    border-radius: 0 12px 12px 0;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .problem-box h2 { color: var(--primary); margin-bottom: 0.8rem; font-size: 1.3rem; }
+  .problem-box p { margin-bottom: 0.6rem; }
+  .rule-list { padding-left: 1.4rem; }
+  .rule-list li { margin-bottom: 0.4rem; }
+
+  /* Step cards */
+  .step-card {
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    overflow: hidden;
+  }
+  .step-header {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1rem 1.2rem;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
+  }
+  .step-header:hover { background: #f1f5f9; }
+  .step-num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+  .step-title { font-weight: 600; font-size: 1rem; flex: 1; }
+  .step-arrow {
+    transition: transform 0.3s;
+    color: #94a3b8;
+    font-size: 1.2rem;
+  }
+  .step-arrow.open { transform: rotate(180deg); }
+  .step-body {
+    display: none;
+    padding: 0 1.2rem 1.2rem;
+    border-top: 1px solid #f1f5f9;
+  }
+  .step-body.open { display: block; }
+  .step-body p { margin-top: 0.8rem; }
+
+  /* Hint boxes */
+  .hint {
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    margin: 0.8rem 0;
+  }
+  .hint-q { background: var(--warning-light); border-left: 3px solid var(--warning); }
+  .hint-a { background: var(--success-light); border-left: 3px solid var(--success); }
+  .hint-warn { background: #fef2f2; border-left: 3px solid var(--danger); }
+  .hint-label {
+    font-weight: 700;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.3rem;
+  }
+  .hint-q .hint-label { color: var(--warning); }
+  .hint-a .hint-label { color: var(--success); }
+  .hint-warn .hint-label { color: var(--danger); }
+
+  /* Reveal button */
+  .reveal-btn {
+    background: none;
+    border: 1.5px dashed #94a3b8;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    color: #64748b;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-top: 0.6rem;
+    transition: all 0.2s;
+  }
+  .reveal-btn:hover { border-color: var(--primary); color: var(--primary); }
+  .reveal-content { display: none; margin-top: 0.6rem; }
+  .reveal-content.shown { display: block; }
+
+  /* Code blocks */
+  pre {
+    background: var(--code-bg);
+    color: var(--code-text);
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    overflow-x: auto;
+    font-family: 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    margin: 0.8rem 0;
+  }
+  code { font-family: inherit; }
+  .kw { color: #cba6f7; }
+  .fn { color: #89b4fa; }
+  .str { color: #a6e3a1; }
+  .num { color: #fab387; }
+  .cm { color: #6c7086; font-style: italic; }
+  .op { color: #89dceb; }
+
+  /* Inline code */
+  p code, li code {
+    background: #f1f5f9;
+    color: #4f46e5;
+    padding: 0.1em 0.4em;
+    border-radius: 4px;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.88em;
+  }
+
+  /* Example box */
+  .example {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 0.8rem 0;
+    font-size: 0.9rem;
+  }
+  .example h4 { color: #64748b; margin-bottom: 0.6rem; font-size: 0.85rem; text-transform: uppercase; }
+
+  /* Final answer section */
+  .final-answer {
+    background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+    border: 2px solid var(--success);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+  }
+  .final-answer h3 { color: var(--success); margin-bottom: 0.5rem; }
+
+  /* Progress bar */
+  .progress-bar {
+    height: 4px;
+    background: #e2e8f0;
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), #7c3aed);
+    border-radius: 2px;
+    transition: width 0.5s;
+  }
+
+  /* Table */
+  table { width: 100%; border-collapse: collapse; margin: 0.8rem 0; font-size: 0.9rem; }
+  th { background: var(--primary-light); color: var(--primary); padding: 0.6rem 0.8rem; text-align: left; }
+  td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #f1f5f9; }
+  tr:last-child td { border-bottom: none; }
+
+  .badge {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    border-radius: 99px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .badge-blue { background: var(--primary-light); color: var(--primary); }
+  .badge-green { background: var(--success-light); color: var(--success); }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.4rem; }
+    .tab-btn { font-size: 0.82rem; padding: 0.8rem 0.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🐍 Python 解題思路引導</h1>
+  <p>APCS 2025年6月實作題 ── 給高中初學者的完整思路拆解</p>
+</header>
+
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab(1)">題目一：小心陷阱</button>
+  <button class="tab-btn" onclick="switchTab(2)">題目二：轉盤得分</button>
+</div>
+
+<!-- ===================== 題目一 ===================== -->
+<div id="tab1" class="tab-content active">
+<div class="container">
+
+  <div class="problem-box">
+    <h2>📋 題目：小心陷阱</h2>
+    <p>在一維數線上玩一場遊戲：</p>
+    <ul class="rule-list">
+      <li>起始位置 = <strong>0</strong>，初始生命值 = <strong>k</strong></li>
+      <li>每回合：從位置 p 往右跳 <strong>v 格</strong>（v = 當前生命值）</li>
+      <li>落在 x₁ 的倍數 → 生命值減 y₁</li>
+      <li>落在 x₂ 的倍數 → 生命值減 y₂</li>
+      <li>同時是兩者倍數 → 同時扣兩個</li>
+      <li>生命值 ≤ 0 時，<strong>輸出當前位置</strong></li>
+    </ul>
+
+    <div class="example" style="margin-top:1rem;">
+      <h4>📥 輸入範例</h4>
+      <pre style="margin:0; padding:0.6rem; font-size:0.85rem;">7
+3 2
+2 3</pre>
+      <h4 style="margin-top:0.6rem;">📤 正確輸出</h4>
+      <pre style="margin:0; padding:0.6rem; font-size:0.85rem;">18</pre>
+    </div>
+  </div>
+
+  <div class="progress-bar"><div class="progress-fill" style="width: 100%"></div></div>
+
+  <!-- Step 1 -->
+  <div class="step-card">
+    <div class="step-header" onclick="toggleStep(this)">
+      <div class="step-num">1</div>
+      <div class="step-title">🔍 讀懂題目：需要哪些變數？</div>
+      <div class="step-arrow">▼</div>
+    </div>
+    <div class="step-body open">
+      <p>解題前，先問自己：<strong>程式需要記住哪些資訊？</strong></p>
+      <div class="hint hint-q">
+        <div class="hint-label">💭 想一想</div>
+        遊戲過程中，哪些數字會一直變化？哪些是從輸入讀進來就固定的？
+      </div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">👁 看提示</button>
+      <div class="reveal-content">
+        <table>
+          <tr><th>變數</th><th>意義</th><th>初始值</th></tr>
+          <tr><td><code>k</code></td><td>目前生命值（會變化）</td><td>輸入</td></tr>
+          <tr><td><code>p</code></td><td>目前位置（會變化）</td><td>0</td></tr>
+          <tr><td><code>x1, y1</code></td><td>陷阱1的倍數與扣血量</td><td>輸入（固定）</td></tr>
+          <tr><td><code>x2, y2</code></td><td>陷阱2的倍數與扣血量</td><td>輸入（固定）</td></tr>
+        </table>
+        <p>所以程式開頭要這樣讀取輸入：</p>
+        <pre><code><span class="cm"># 讀取輸入</span>
+k = <span class="fn">int</span>(<span class="fn">input</span>())
+x1, y1 = <span class="fn">map</span>(<span class="fn">int</span>, <span class="fn">input</span>().<span class="fn">split</span>())
+x2, y2 = <span class="fn">map</span>(<span class="fn">int</span>, <span class="fn">input</span>().<span class="fn">split</span>())
+p = <span class="num">0</span>  <span class="cm"># 初始位置</span></code></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="step-card">
+    <div class="step-header" onclick="toggleStep(this)">
+      <div class="step-num">2</div>
+      <div class="step-title">🔄 迴圈結構：什麼時候繼續？什麼時候停止？</div>
+      <div class="step-arrow">▼</div>
+    </div>
+    <div class="step-body">
+      <div class="hint hint-q">
+        <div class="hint-label">💭 想一想</div>
+        遊戲的結束條件是什麼？用哪種迴圈最自然？
+      </div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">👁 看提示</button>
+      <div class="reveal-content">
+        <p>結束條件：生命值 ≤ 0 時停止。反過來說，<strong>繼續的條件是 k > 0</strong>。</p>
+        <p>用 <code>while</code> 迴圈最直觀，因為我們不知道會跑幾次：</p>
+        <pre><code><span class="kw">while</span> k > <span class="num">0</span>:
+    <span class="cm"># 每回合做的事...</span></code></pre>
+        <div class="hint hint-warn">
+          <div class="hint-label">⚠️ 常見錯誤</div>
+          不要用 <code>for</code> 迴圈——我們不知道要跑幾次，用 <code>while</code> 才對！
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="step-card">
+    <div class="step-header" onclick="toggleStep(this)">
+      <div class="step-num">3</div>
+      <div class="step-title">🚶 移動邏輯：跳幾格？</div>
+      <div class="step-arrow">▼</div>
+    </div>
+    <div class="step-body">
+      <div class="hint hint-q">
+        <div class="hint-label">💭 想一想</div>
+        題目說「當前生命值為 v 時，往右跳 v 格」。用程式怎麼表達？
+      </div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">👁 看提示</button>
+      <div class="reveal-content">
+        <p>每次迴圈，先把位置加上目前的生命值：</p>
+        <pre><code>p += k  <span class="cm"># 從現在的位置跳 k 格（k 是當前生命值）</span></code></pre>
+        <p>用範例驗證：初始 k=7, p=0</p>
+        <p>第一步：p = 0 + 7 = <strong>7</strong> ✓</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 4 -->
+  <div class="step-card">
+    <div class="step-header" onclick="toggleStep(this)">
+      <div class="step-num">4</div>
+      <div class="step-title">⚡ 陷阱判斷：順序很重要！</div>
+      <div class="step-arrow">▼</div>
+    </div>
+    <div class="step-body">
+      <div class="hint hint-q">
+        <div class="hint-label">💭 想一想</div>
+        有三種情況：同時踩兩個陷阱、只踩陷阱1、只踩陷阱2。
+        用 <code>if / elif / else</code> 怎麼寫？有沒有順序問題？
+      </div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">👁 看提示</button>
+      <div class="reveal-content">
+        <div class="hint hint-warn">
+          <div class="hint-label">⚠️ 關鍵陷阱：先檢查「同時是兩者倍數」！</div>
+          如果先寫 <code>if p%x1 == 0</code>，當同時踩兩個時，就進不到第二個條件了！
+        </div>
+        <p>正確的判斷順序：</p>
+        <pre><code><span class="kw">if</span> p % x1 == <span class="num">0</span> <span class="kw">and</span> p % x2 == <span class="num">0</span>:   <span class="cm"># 先判斷「同時」</span>
+    k -= y1 + y2
+<span class="kw">elif</span> p % x1 == <span class="num">0</span>:                      <span class="cm"># 只踩 x1</span>
+    k -= y1
+<span class="kw">elif</span> p % x2 == <span class="num">0</span>:                      <span class="cm"># 只踩 x2</span>
+    k -= y2
+<span class="cm"># 沒踩到任何陷阱 → k 不變</span></code></pre>
+        <p><strong>% 是什麼？</strong>取餘數運算。<code>p % x1 == 0</code> 表示 p 是 x1 的倍數。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 5 -->
+  <div class="step-card">
+    <div class="step-header" onclick="toggleStep(this)">
+      <div class="step-num">5</div>
+      <div class="step-title">🧪 手動追蹤：用範例驗證你的邏輯</div>
+      <div class="step-arrow">▼</div>
+    </div>
+    <div class="step-body">
+      <p>用範例二驗證（k=7, x1=3, y1=2, x2=2, y2=3）：</p>
+      <button class="reveal-btn" onclick="toggleReveal(this)">👁 看完整追蹤過程</button>
+      <div class="reveal-content">
+        <table>
+          <tr><th>回合</th><th>跳前 k</th><th>跳前 p</th><th>跳後 p</th><th>踩陷阱？</th><th>跳後 k</th></tr>
+          <tr><td>1</td><td>7</td><td>0</td><td>7</td><td>無</td><td>7</td></tr>
+          <tr><td>2</td><td>7</td><td>7</td><td>14</td><td>x2倍數（14÷2=7）→ -3</td><td>4</td></tr>
+          <tr><td>3</td><td>4</td><td>14</td><td>18</td><td>x1倍數（18÷3=6）→ -2<br>x2倍數（18÷2=9）→ -3<br>合計 -5</td><td>-1</td></tr>
+        </table>
+        <p>k = -1 ≤ 0，遊戲結束，輸出 p = <strong>18</strong> ✓</p>
+        <div class="hint hint-a">
+          <div class="hint-label">✅ 重點</div>
+          移動後立刻判斷陷阱。注意第3回合，18同時是3和2的倍數，所以兩個都扣！
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Final Answer -->
+  <div class="final-answer">
+    <h3>✅ 完整程式碼</h3>
+    <p style="margin-bottom:0.8rem; color: #374151;">把以上步驟組合起來：</p>
+    <pre><code>k = <span class="fn">int</span>(<span class="fn">input</span>())           <span class="cm"># 初始生命值</span>
+x1, y1 = <span class="fn">map</span>(<span class="fn">int</span>, <span class="fn">input</span>().<span class="fn">split</span>())
+x2, y2 = <span class="fn">map</span>(<span class="fn">int</span>, <span class="fn">input</span>().<span class="fn">split</span>())
+p = <span class="num">0</span>                       <span class="cm"># 初始位置</span>
+
+<span class="kw">while</span> k > <span class="num">0</span>:               <span class="cm"># 生命值 > 0 就繼續</span>
+    p += k                  <span class="cm"># 跳 k 格（當前生命值）</span>
+    <span class="kw">if</span> p % x1 == <span class="num">0</span> <span class="kw">and</span> p % x2 == <span class="num">0</span>:
+        k -= y1 + y2        <span class="cm"># 同時踩兩個陷阱</span>
+    <span class="kw">elif</span> p % x1 == <span class="num">0</span>:
+        k -= y1
+    <span class="kw">elif</span> p % x2 == <span class="num">0</span>:
+        k -= y2
+
+<span class="fn">print</span>(p)                    <span class="cm"># 輸出最終位置</span></code></pre>
+    <div style="margin-top:1rem; padding:0.8rem; background:white; border-radius:8px;">
+      <p><strong>思路總結：</strong></p>
+      <ul class="rule-list" style="margin-top:0.4rem;">
+        <li>用 <code>while k > 0</code> 控制遊戲繼續</li>
+        <li>每次先移動（<code>p += k</code>），再判斷陷阱</li>
+        <li>判斷陷阱時，<strong>同時踩兩個的情況要最先寫</strong></li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<!-- ===================== 題目二 ===================== -->
+<div id="tab2" class="tab-content">
+<div class="container">
+
+  <div class="problem-box">
+    <h2>📋 題目：轉盤得分</h2>
+    <p>你有 <strong>m 個輪盤</strong>，每個有 <strong>n 格</strong>字母。共 <strong>k 回合</strong>，每回合：</p>
+    <ul class="rule-list">
+      <li>每個輪盤各自旋轉（正數順時針、負數逆時針）</li>
+      <li>旋轉完後，對齊位置的每格，找<strong>出現最多次的字母</strong>，其次數加入分數</li>
+      <li>輸出 k 回合的<strong>總得分</strong></li>
+    </ul>
+    <div class="example" style="margin-top:1rem;">
+      <h4>📥 輸入範例</h4>
+      <pre style="margin:0; padding:0.6rem; font-size:0.85rem;">3 6 2
+apcsie
+taiwan
+icpeda
+1 0 -4
+7 -3 2</pre>
+      <h4 style="margin-top:0.6rem;">📤 正確輸出</h4>
+      <pre style="margin:0; padding:0.6rem; font-size:0.85rem;">17</pre>
+    </div>
+  </div>
+
+  <div class="progress-bar"><div class="progress-fill" style="width: 100%"></div></div>
+
+  <!-- Step 1 -->
+  <div class="step-card">
+    <div class="step-header" onclick="toggleStep(this)">
+      <div class="step-num">1</div>
+      <div class="step-title">🔍 分析問題：把大問題拆小</div>
+      <div class="step-arrow">▼</div>
+    </div>
+    <div class="step-body open">
+      <p>遇到複雜題目，先問自己：<strong>這題要我做什麼事？</strong></p>
+      <div class="hint hint-q">
+        <div class="hint-label">💭 想一想</div>
+        整個解題過程可以拆成哪三件事？
+      </div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">👁 看提示</button>
+      <div class="reveal-content">
+        <p>三件事：</p>
+        <ol style="padding-left:1.4rem; margin-top:0.4rem;">
+          <li><strong>輸入</strong>：讀取輪盤和每回合的轉動量</li>
+          <li><strong>模擬旋轉</strong>：每回合讓輪盤轉動</li>
+          <li><strong>計算分數</strong>：找每格出現最多的字母，累加次數</li>
+        </ol>
+        <p style="margin-top:0.8rem;">先讀輸入：</p>
+        <pre><code><span class="kw">from</span> collections <span class="kw">import</span> defaultdict
+
+m, n, k = <span class="fn">map</span>(<span class="fn">int</span>, <span class="fn">input</span>().<span class="fn">split</span>())  <span class="cm"># m個輪盤，n格，k回合</span>
+roulettes = [<span class="fn">list</span>(<span class="fn">input</span>()) <span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(m)]  <span class="cm"># 每個輪盤存成字母串列</span></code></pre>
+        <div class="hint hint-q">
+          <div class="hint-label">💭 為什麼用 list(input())？</div>
+          因為我們之後要對輪盤做切片（slice）操作，串列比字串方便。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="step-card">
+    <div class="step-header" onclick="toggleStep(this)">
+      <div class="step-num">2</div>
+      <div class="step-title">🔄 理解旋轉：用圖想清楚方向</div>
+      <div class="step-arrow">▼</div>
+    </div>
+    <div class="step-body">
+      <p>旋轉是這題最難的部分。先用小例子想清楚：</p>
+      <div class="example">
+        <h4>範例：輪盤 apcsie，順時針旋轉 1 格</h4>
+        <p>結果：<code>eapcsi</code>（最後一個字母「e」轉到最前面）</p>
+        <p>可以想像：輪盤像貼著牆的轉輪，順時針轉，底部的字母出現在頂端</p>
+      </div>
+      <div class="hint hint-q">
+        <div class="hint-label">💭 想一想</div>
+        <code>apcsie</code> 順時針轉 1 → <code>eapcsi</code><br>
+        用串列切片怎麼表達？（提示：把後面幾個移到前面）
+      </div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">👁 看切片邏輯</button>
+      <div class="reveal-content">
+        <p>原始：<code>['a','p','c','s','i','e']</code>（n=6）</p>
+        <p>順時針轉 1（rotate=1）：</p>
+        <pre><code><span class="cm"># 取最後 rotate 個，接上前面的</span>
+rotate = <span class="num">1</span>
+d = n - rotate  <span class="cm"># d = 5，從第5個開始切</span>
+result = roulettes[i][d:] + roulettes[i][:d]
+<span class="cm"># [d:] = ['e']，[:d] = ['a','p','c','s','i']</span>
+<span class="cm"># 合併 = ['e','a','p','c','s','i'] = "eapcsi" ✓</span></code></pre>
+        <p>逆時針轉 rotate 格（rotate 要先轉為正數）：</p>
+        <pre><code>rotate = <span class="num">4</span>  <span class="cm"># 原本是 -4，先轉正</span>
+result = roulettes[i][rotate:] + roulettes[i][:rotate]
+<span class="cm"># [4:] = ['i','e']，[:4] = ['a','p','c','s']</span>
+<span class="cm"># 合併... 但等等，icpeda 逆時針轉4 → daicpe，不是這個！</span></code></pre>
+        <div class="hint hint-warn">
+          <div class="hint-label">⚠️ 注意！</div>
+          旋轉格數可能超過 n，要先對 n 取餘數（<code>rotate %= n</code>），否則越界！
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="step-card">
+    <div class="step-header" onclick="toggleStep(this)">
+      <div class="step-num">3</div>
+      <div class="step-title">📝 寫出旋轉的完整程式碼</div>
+      <div class="step-arrow">▼</div>
+    </div>
+    <div class="step-body">
+      <div class="hint hint-q">
+        <div class="hint-label">💭 想一想</div>
+        旋轉有三種情況：正數（順時針）、負數（逆時針）、0（不動）。各怎麼處理？
+      </div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">👁 看完整旋轉邏輯</button>
+      <div class="reveal-content">
+        <pre><code><span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(m):
+    rotate = rotates[i]
+    <span class="kw">if</span> rotate > <span class="num">0</span>:           <span class="cm"># 順時針</span>
+        rotate %= n         <span class="cm"># 超過一圈只算餘數</span>
+        d = n - rotate      <span class="cm"># 切割點</span>
+        roulettes[i] = roulettes[i][d:] + roulettes[i][:d]
+    <span class="kw">elif</span> rotate < <span class="num">0</span>:         <span class="cm"># 逆時針</span>
+        rotate = -rotate    <span class="cm"># 轉成正數</span>
+        rotate %= n
+        roulettes[i] = roulettes[i][rotate:] + roulettes[i][:rotate]
+    <span class="cm"># rotate == 0：不動，不需處理</span></code></pre>
+        <div class="example">
+          <h4>驗證：icpeda 逆時針轉 4</h4>
+          <p>rotate = -4 → 轉正 = 4，4 % 6 = 4</p>
+          <p><code>['i','c','p','e','d','a'][4:]</code> = <code>['d','a']</code></p>
+          <p><code>['i','c','p','e','d','a'][:4]</code> = <code>['i','c','p','e']</code></p>
+          <p>合併 = <code>daicpe</code> ✓</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 4 -->
+  <div class="step-card">
+    <div class="step-header" onclick="toggleStep(this)">
+      <div class="step-num">4</div>
+      <div class="step-title">📊 計算分數：統計每格的字母</div>
+      <div class="step-arrow">▼</div>
+    </div>
+    <div class="step-body">
+      <div class="hint hint-q">
+        <div class="hint-label">💭 想一想</div>
+        旋轉完後，要看每一個「格位」（第0格、第1格...第n-1格）在所有輪盤上的字母。
+        如何統計？如何找最多次的？
+      </div>
+      <button class="reveal-btn" onclick="toggleReveal(this)">👁 看計分邏輯</button>
+      <div class="reveal-content">
+        <p>對每一格（共 n 格），收集所有輪盤在該格的字母，數最多的次數：</p>
+        <pre><code><span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(n):              <span class="cm"># 每一個格位</span>
+    cnt = defaultdict(<span class="fn">int</span>)    <span class="cm"># 字母計數器</span>
+    <span class="kw">for</span> roulette <span class="kw">in</span> roulettes:  <span class="cm"># 每個輪盤</span>
+        cnt[roulette[i]] += <span class="num">1</span>  <span class="cm"># 該格的字母 +1</span>
+    score += <span class="fn">max</span>(cnt.values()) <span class="cm"># 最多出現的次數加入分數</span></code></pre>
+        <div class="hint hint-q">
+          <div class="hint-label">💭 defaultdict 是什麼？</div>
+          <code>defaultdict(int)</code> 是特殊字典，第一次存取不存在的 key 時，自動給預設值 0，
+          不用先寫 <code>if key not in cnt: cnt[key] = 0</code>。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 5 -->
+  <div class="step-card">
+    <div class="step-header" onclick="toggleStep(this)">
+      <div class="step-num">5</div>
+      <div class="step-title">🧪 手動驗證：第一回合得分</div>
+      <div class="step-arrow">▼</div>
+    </div>
+    <div class="step-body">
+      <p>第一回合轉動：輪盤1轉+1，輪盤2轉0，輪盤3轉-4</p>
+      <button class="reveal-btn" onclick="toggleReveal(this)">👁 看完整驗證</button>
+      <div class="reveal-content">
+        <p>旋轉後：</p>
+        <table>
+          <tr><th>輪盤</th><th>旋轉後</th></tr>
+          <tr><td>輪盤1</td><td>e a p c s i</td></tr>
+          <tr><td>輪盤2</td><td>t a i w a n</td></tr>
+          <tr><td>輪盤3</td><td>d a i c p e</td></tr>
+        </table>
+        <p style="margin-top:0.8rem;">每格計分：</p>
+        <table>
+          <tr><th>格位</th><th>字母（三輪盤）</th><th>最多次數</th></tr>
+          <tr><td>第0格</td><td>e, t, d</td><td>1（各1次）</td></tr>
+          <tr><td>第1格</td><td>a, a, a</td><td>3（a出現3次）</td></tr>
+          <tr><td>第2格</td><td>p, i, i</td><td>2（i出現2次）</td></tr>
+          <tr><td>第3格</td><td>c, w, c</td><td>2（c出現2次）</td></tr>
+          <tr><td>第4格</td><td>s, a, p</td><td>1（各1次）</td></tr>
+          <tr><td>第5格</td><td>i, n, e</td><td>1（各1次）</td></tr>
+        </table>
+        <p>第一回合得分 = 1+3+2+2+1+1 = <strong>10</strong></p>
+        <p>第二回合同理算出 7，總分 = 10+7 = <strong>17</strong> ✓</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Final Answer -->
+  <div class="final-answer">
+    <h3>✅ 完整程式碼</h3>
+    <p style="margin-bottom:0.8rem; color: #374151;">組合所有步驟：</p>
+    <pre><code><span class="kw">from</span> collections <span class="kw">import</span> defaultdict
+
+m, n, k = <span class="fn">map</span>(<span class="fn">int</span>, <span class="fn">input</span>().<span class="fn">split</span>())
+roulettes = [<span class="fn">list</span>(<span class="fn">input</span>()) <span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(m)]
+score = <span class="num">0</span>
+
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(k):                        <span class="cm"># 每回合</span>
+    rotates = <span class="fn">list</span>(<span class="fn">map</span>(<span class="fn">int</span>, <span class="fn">input</span>().<span class="fn">split</span>()))
+
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(m):                    <span class="cm"># 旋轉每個輪盤</span>
+        rotate = rotates[i]
+        <span class="kw">if</span> rotate > <span class="num">0</span>:
+            rotate %= n
+            roulettes[i] = roulettes[i][n-rotate:] + roulettes[i][:n-rotate]
+        <span class="kw">elif</span> rotate < <span class="num">0</span>:
+            rotate = -rotate
+            rotate %= n
+            roulettes[i] = roulettes[i][rotate:] + roulettes[i][:rotate]
+
+    <span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(n):                    <span class="cm"># 計算每格的分數</span>
+        cnt = defaultdict(<span class="fn">int</span>)
+        <span class="kw">for</span> roulette <span class="kw">in</span> roulettes:
+            cnt[roulette[i]] += <span class="num">1</span>
+        score += <span class="fn">max</span>(cnt.values())
+
+<span class="fn">print</span>(score)</code></pre>
+    <div style="margin-top:1rem; padding:0.8rem; background:white; border-radius:8px;">
+      <p><strong>思路總結：</strong></p>
+      <ul class="rule-list" style="margin-top:0.4rem;">
+        <li>旋轉 = 串列切片重組，正數順時針（尾接頭），負數逆時針（頭切掉幾個移到後面）</li>
+        <li>旋轉量要先對 n 取餘數（避免超過一圈）</li>
+        <li>計分用 <code>defaultdict</code> 統計字母，<code>max(cnt.values())</code> 取最多次</li>
+        <li>注意輪盤狀態是<strong>累積的</strong>（下回合從上回合結束狀態繼續轉）</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+function switchTab(n) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', i===n-1));
+  document.querySelectorAll('.tab-content').forEach((c,i) => c.classList.toggle('active', i===n-1));
+}
+function toggleStep(header) {
+  const body = header.nextElementSibling;
+  const arrow = header.querySelector('.step-arrow');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  arrow.classList.toggle('open', !isOpen);
+}
+function toggleReveal(btn) {
+  const content = btn.nextElementSibling;
+  const isShown = content.classList.contains('shown');
+  content.classList.toggle('shown', !isShown);
+  btn.textContent = isShown ? '👁 看提示' : '🙈 隱藏提示';
+}
+// Default open first steps
+document.querySelectorAll('.step-arrow').forEach(a => {
+  if (a.closest('.step-body.open')) a.classList.add('open');
+});
+</script>
+</body>
+</html>
